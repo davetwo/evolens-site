@@ -1,0 +1,100 @@
+/* evolens.app (V1): the app's legal and support pages. Colours from the evolens web tokens. */
+@font-face {
+  font-family: 'Instrument Sans';
+  src: url('/assets/instrument-sans.woff2') format('woff2');
+  font-weight: 400 700;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: dark;
+  --night: #1b1b1b;
+  --text-hi: #e3e3e3;
+  --text: rgb(227 227 227 / 0.82);
+  --text-lo: #8a8a8a;
+  --line: #2a2a2a;
+  --font: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--night);
+  color: var(--text);
+  font-family: var(--font);
+  line-height: 1.55;
+  letter-spacing: -0.01em;
+}
+
+main {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: max(40px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right)) 64px
+    max(20px, env(safe-area-inset-left));
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 40px;
+  color: var(--text-hi);
+  font-weight: 600;
+  font-size: 22px;
+  letter-spacing: -0.04em;
+  text-decoration: none;
+}
+
+.brand svg { width: 22px; height: 22px; }
+
+h1 {
+  margin: 0;
+  color: var(--text-hi);
+  font-size: clamp(32px, 7vw, 44px);
+  line-height: 1.22;
+  letter-spacing: -0.04em;
+  font-weight: 600;
+}
+
+.date { margin: 8px 0 32px; color: var(--text-lo); }
+
+h2 {
+  margin: 44px 0 12px;
+  color: var(--text-hi);
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+
+h3 { margin: 28px 0 8px; color: var(--text-hi); font-size: 17px; font-weight: 600; }
+
+p, li { font-size: 16px; }
+
+ul { padding-left: 20px; }
+
+li + li { margin-top: 10px; }
+
+a { color: var(--text-hi); text-underline-offset: 3px; }
+
+a:focus-visible { outline: 2px solid rgb(255 255 255 / 0.7); outline-offset: 2px; border-radius: 2px; }
+
+.lead { font-size: 19px; color: var(--text-hi); }
+
+footer {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 24px max(20px, env(safe-area-inset-right)) max(40px, env(safe-area-inset-bottom))
+    max(20px, env(safe-area-inset-left));
+  border-top: 1px solid var(--line);
+  color: var(--text-lo);
+  font-size: 14px;
+}
+
+footer nav { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-bottom: 12px; }
+
+footer a { color: var(--text-lo); text-decoration: none; }
+
+footer a:hover { color: var(--text-hi); }
