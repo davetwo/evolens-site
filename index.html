@@ -3,21 +3,108 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#1b1b1b">
-<title>evolens</title>
+<meta name="theme-color" content="#f9fafb">
+<title>evolens: scan your entire Pokémon collection</title>
+<meta name="description" content="evolens recognizes your Pokémon cards with your iPhone’s camera, keeps your collection organized, and shows what it’s worth.">
 <link rel="canonical" href="https://evolens.app/">
-<link rel="stylesheet" href="/assets/site.css">
+<link rel="preload" href="/assets/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/home.css">
 </head>
 <body>
-<main>
-<a class="brand" href="/"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M8.1 1h7.8L23 8.1v7.8L15.9 23H8.1L1 15.9V8.1zM12 6.2l-2.9 5.8 2.9 5.8 2.9-5.8z"/></svg>evolens</a>
-<h1>Scan and track your Pokémon card collection.</h1>
-<p class="lead">evolens recognizes your cards with your iPhone’s camera, keeps your collection organized, and shows what it’s worth. Coming soon to the App Store.</p>
-<p><a href="/support/">Support</a> · <a href="/privacy/">Privacy Policy</a> · <a href="/terms/">Terms of Use</a></p>
-</main>
-<footer>
-<nav><a href="/support/">Support</a><a href="/privacy/">Privacy Policy</a><a href="/terms/">Terms of Use</a></nav>
-© 2026 evolens
-</footer>
+<div class="page">
+  <header class="hero">
+    <nav class="hero__nav" aria-label="evolens">
+      <a href="/">evolens</a>
+      <a href="#download">download</a>
+    </nav>
+
+    <h1 class="hero__title">Scan your entire Pokémon collection</h1>
+
+    <div class="badge badge--soon"><img src="/assets/home/app-store-badge.png" width="146" height="48" alt="App Store"><span class="badge__note">Coming soon</span></div>
+
+    <div class="gallery" role="region" aria-label="evolens on iPhone" tabindex="0">
+      <div class="gallery__track">
+        <img class="screen" src="/assets/home/screen-value.webp" width="325" height="633"
+             alt="Scanning Zeraora VMAX: the card is recognized at $28.99, and the collection's total value reads $2,155.48.">
+
+        <div class="screen cards-screen" role="img" aria-label="My Cards: a grid of the cards in your collection.">
+          <div class="cs">
+            <div class="cs__status" aria-hidden="true">
+              <span class="cs__time">9:41</span>
+              <span class="cs__levels">
+                <img src="/assets/home/icons/cellular.svg" width="14.1818" height="9.03087" alt="">
+                <img src="/assets/home/icons/wifi.svg" width="12.6615" height="9.10613" alt="">
+                <img class="cs__battery" src="/assets/home/icons/battery.svg" width="20.5264" height="9.60227" alt="">
+              </span>
+            </div>
+
+            <div class="cs__brand">
+              <span class="cs__mark"><img src="/assets/home/icons/mark.svg" width="200.909" height="200.909" alt=""></span>
+              <span class="cs__word">evolens</span>
+            </div>
+
+            <div class="cs__actions">
+              <img src="/assets/home/icons/search.svg" width="17.7273" height="17.7273" alt="">
+              <img src="/assets/home/icons/plus.svg" width="17.7273" height="17.7273" alt="">
+              <img src="/assets/home/icons/gear.svg" width="17.7273" height="17.7273" alt="">
+            </div>
+
+            <div class="cs__tabs">
+              <span class="cs__tab cs__tab--on">Cards <span class="cs__count">12</span></span>
+              <span class="cs__tab">Collections</span>
+              <span class="cs__tab">Favorites</span>
+              <span class="cs__tab">Sets</span>
+            </div>
+            <img class="cs__tab-line" src="/assets/home/icons/tab-line.svg" width="53.9205" height="1.10795" alt="">
+            <img class="cs__rule" src="/assets/home/icons/rule.svg" width="325" height="0.24375" alt="">
+
+            <div class="cs__sort">
+              <span class="cs__sort-label">Recently Added
+                <img src="/assets/home/icons/chevron-down.svg" width="10.3409" height="10.3409" alt=""></span>
+              <img src="/assets/home/icons/sliders.svg" width="13.2955" height="13.2955" alt="">
+            </div>
+
+            <div class="cs__grid">
+              <img src="/assets/home/cards/c1.webp" alt="">
+              <img class="cs__r5" src="/assets/home/cards/c2.webp" alt="">
+              <img src="/assets/home/cards/c3.webp" alt="">
+              <img src="/assets/home/cards/c4.webp" alt="">
+              <img class="cs__wide" src="/assets/home/cards/c5.webp" alt="">
+              <img src="/assets/home/cards/c6.webp" alt="">
+              <img src="/assets/home/cards/c7.webp" alt="">
+              <img src="/assets/home/cards/c8.webp" alt="">
+              <img src="/assets/home/cards/c9.webp" alt="">
+              <img src="/assets/home/cards/c7.webp" alt="">
+              <img src="/assets/home/cards/c8.webp" alt="">
+              <img src="/assets/home/cards/c9.webp" alt="">
+            </div>
+
+            <div class="cs__dock">
+              <span class="cs__pill"><img src="/assets/home/icons/flashcards.svg" width="17.7273" height="17.7273" alt=""><img src="/assets/home/icons/search-nav.svg" width="17.7273" height="17.7273" alt=""></span>
+              <span class="cs__pill cs__pill--round"><img src="/assets/home/icons/camera.svg" width="17.7273" height="17.7273" alt=""></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <footer class="foot" id="download">
+    <div class="badge badge--soon"><img src="/assets/home/app-store-badge.png" width="146" height="48" alt="App Store"><span class="badge__note">Coming soon</span></div>
+
+    <div class="foot__links">
+      <ul class="foot__social"><li>Instagram</li><li>TikTok</li><li>Youtube</li></ul>
+      <ul class="foot__legal">
+        <li><a href="/terms/">Terms</a></li>
+        <li><a href="/privacy/">Privacy</a></li>
+        <li><a href="/support/">Contact</a></li>
+      </ul>
+    </div>
+
+    <div class="foot__marquee" aria-hidden="true">
+      <span>evolens</span><span>evolens</span><span>evolens</span><span>evolens</span><span>evolens</span><span>evolens</span><span>evolens</span><span>evolens</span><span>evolens</span>
+    </div>
+  </footer>
+</div>
 </body>
 </html>
