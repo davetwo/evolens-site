@@ -69,16 +69,7 @@ body {
 
 .brand__word { position: absolute; left: 32px; top: 0; }
 
-/* The mark's SVG carries Figma's glow, so its box is far larger than the mark it draws. */
-.brand__mark {
-  position: absolute;
-  left: -120px;
-  top: -111px;
-  width: 266px;
-  height: 266px;
-  max-width: none;
-  pointer-events: none;
-}
+.brand__mark { position: absolute; left: 0; top: 9px; width: 26px; height: 26px; }
 
 .nav__home {
   color: var(--ink);
@@ -148,14 +139,18 @@ body {
 
 .foot__brand span { position: absolute; left: 58px; top: 0; }
 
-.foot__brand img {
+.foot__brand img { position: absolute; left: 0; top: 20px; width: 48px; height: 48px; }
+
+/* Figma's glow, kept out of the SVG and off the image: Safari draws a filtered mark at 1x, or not at all. */
+.foot__brand::before {
+  content: '';
   position: absolute;
-  left: -120px;
-  top: -100px;
-  width: 288px;
-  height: 288px;
-  max-width: none;
-  pointer-events: none;
+  left: 2px;
+  top: 22px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  box-shadow: 0 0 120px rgb(255 255 255 / .33);
 }
 
 .foot__tagline {

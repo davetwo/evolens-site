@@ -31,7 +31,7 @@ def badge(note=False):
 
 def nav(right):
     return (f'<header class="nav"><a class="brand" href="/"><img class="brand__mark" src="/assets/home/mark-black.svg" '
-            f'width="266" height="266" alt=""><span class="brand__word" translate="no">evolens</span></a>{right}</header>')
+            f'width="26" height="26" alt=""><span class="brand__word" translate="no">evolens</span></a>{right}</header>')
 
 
 def footer():
@@ -41,7 +41,7 @@ def footer():
   <hr class="foot__rule">
   <div class="foot__row">
     <div class="foot__lead">
-      <a class="foot__brand" href="/"><img src="/assets/home/mark-white.svg" width="288" height="288" alt=""><span translate="no">evolens</span></a>
+      <a class="foot__brand" href="/"><img src="/assets/home/mark-white.svg" width="48" height="48" alt=""><span translate="no">evolens</span></a>
       <p class="foot__tagline">Made for the cards you love.</p>
       {badge(note=True)}
     </div>
