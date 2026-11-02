@@ -3,108 +3,114 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#f9fafb">
-<title>evolens: scan your entire Pokémon collection</title>
+<meta name="theme-color" content="#ffffff">
+<title>evolens: scan, track, and value your Pokémon cards</title>
 <meta name="description" content="evolens recognizes your Pokémon cards with your iPhone’s camera, keeps your collection organized, and shows what it’s worth.">
 <link rel="canonical" href="https://evolens.app/">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/assets/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/base.css">
+<link rel="preload" href="/assets/geist.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/home.css">
+<script src="/assets/hero.js" defer></script>
 </head>
 <body>
-<div class="page">
-  <header class="hero">
-    <nav class="hero__nav" aria-label="evolens">
-      <a href="/">evolens</a>
-      <a href="#download">download</a>
-    </nav>
+<header class="nav"><a class="brand" href="/"><img class="brand__mark" src="/assets/home/mark-black.svg" width="266" height="266" alt=""><span class="brand__word" translate="no">evolens</span></a><span class="badge" title="Coming soon"><img src="/assets/home/app-store-badge.svg" width="144" height="48" alt="Coming soon to the App Store"></span></header>
+<main>
+  <section class="hero">
+    <h1 class="hero__title">Scan, track,&nbsp;<br>and value your<br>Pokémon cards</h1>
+    <p class="hero__sub">Bring your entire collection into focus.</p>
+    <div class="hero__badge"><span class="badge" title="Coming soon"><img src="/assets/home/app-store-badge.svg" width="144" height="48" alt="Coming soon to the App Store"><span class="badge__note" aria-hidden="true">Coming soon</span></span></div>
 
-    <h1 class="hero__title">Scan your entire Pokémon collection</h1>
+    <figure class="demo" data-demo role="img" aria-label="Demonstration: evolens recognizes a card held up to the iPhone’s camera, shows its name and value, and adds it to the session total. Cards and prices are examples.">
+      <div class="demo__screen">
+        <div class="demo__tint"></div>
+      </div>
+      <img class="demo__frame" src="/assets/home/phone.webp" alt="" width="980" height="2000" fetchpriority="high">
 
-    <div class="badge badge--soon"><img src="/assets/home/app-store-badge.png" width="146" height="48" alt="App Store"><span class="badge__note">Coming soon</span></div>
-
-    <div class="gallery" role="region" aria-label="evolens on iPhone" tabindex="0">
-      <div class="gallery__track">
-        <img class="screen" src="/assets/home/screen-value.webp" width="325" height="633"
-             alt="Scanning Zeraora VMAX: the card is recognized at $28.99, and the collection's total value reads $2,155.48.">
-
-        <div class="screen cards-screen" role="img" aria-label="My Cards: a grid of the cards in your collection.">
-          <div class="cs">
-            <div class="cs__status" aria-hidden="true">
-              <span class="cs__time">9:41</span>
-              <span class="cs__levels">
-                <img src="/assets/home/icons/cellular.svg" width="14.1818" height="9.03087" alt="">
-                <img src="/assets/home/icons/wifi.svg" width="12.6615" height="9.10613" alt="">
-                <img class="cs__battery" src="/assets/home/icons/battery.svg" width="20.5264" height="9.60227" alt="">
-              </span>
-            </div>
-
-            <div class="cs__brand">
-              <span class="cs__mark"><img src="/assets/home/icons/mark.svg" width="200.909" height="200.909" alt=""></span>
-              <span class="cs__word">evolens</span>
-            </div>
-
-            <div class="cs__actions">
-              <img src="/assets/home/icons/search.svg" width="17.7273" height="17.7273" alt="">
-              <img src="/assets/home/icons/plus.svg" width="17.7273" height="17.7273" alt="">
-              <img src="/assets/home/icons/gear.svg" width="17.7273" height="17.7273" alt="">
-            </div>
-
-            <div class="cs__tabs">
-              <span class="cs__tab cs__tab--on">Cards <span class="cs__count">12</span></span>
-              <span class="cs__tab">Collections</span>
-              <span class="cs__tab">Favorites</span>
-              <span class="cs__tab">Sets</span>
-            </div>
-            <img class="cs__tab-line" src="/assets/home/icons/tab-line.svg" width="53.9205" height="1.10795" alt="">
-            <img class="cs__rule" src="/assets/home/icons/rule.svg" width="325" height="0.24375" alt="">
-
-            <div class="cs__sort">
-              <span class="cs__sort-label">Recently Added
-                <img src="/assets/home/icons/chevron-down.svg" width="10.3409" height="10.3409" alt=""></span>
-              <img src="/assets/home/icons/sliders.svg" width="13.2955" height="13.2955" alt="">
-            </div>
-
-            <div class="cs__grid">
-              <img src="/assets/home/cards/c1.webp" alt="">
-              <img class="cs__r5" src="/assets/home/cards/c2.webp" alt="">
-              <img src="/assets/home/cards/c3.webp" alt="">
-              <img src="/assets/home/cards/c4.webp" alt="">
-              <img class="cs__wide" src="/assets/home/cards/c5.webp" alt="">
-              <img src="/assets/home/cards/c6.webp" alt="">
-              <img src="/assets/home/cards/c7.webp" alt="">
-              <img src="/assets/home/cards/c8.webp" alt="">
-              <img src="/assets/home/cards/c9.webp" alt="">
-              <img src="/assets/home/cards/c7.webp" alt="">
-              <img src="/assets/home/cards/c8.webp" alt="">
-              <img src="/assets/home/cards/c9.webp" alt="">
-            </div>
-
-            <div class="cs__dock">
-              <span class="cs__pill"><img src="/assets/home/icons/flashcards.svg" width="17.7273" height="17.7273" alt=""><img src="/assets/home/icons/search-nav.svg" width="17.7273" height="17.7273" alt=""></span>
-              <span class="cs__pill cs__pill--round"><img src="/assets/home/icons/camera.svg" width="17.7273" height="17.7273" alt=""></span>
-            </div>
-          </div>
+      <div class="demo__view">
+        <div class="demo__card" data-card>
+          <img src="/assets/home/cards/mega-darkrai-ex.webp" alt="" width="660" height="922" fetchpriority="high">
+        </div>
+        <div class="demo__card demo__card--later" data-card>
+          <img src="/assets/home/cards/fezandipiti-ex.webp" alt="" width="660" height="922" fetchpriority="low">
+        </div>
+        <div class="demo__card demo__card--later demo__card--glow" data-card>
+          <img src="/assets/home/cards/cresselia.webp" alt="" width="660" height="922" fetchpriority="low">
         </div>
       </div>
+
+      <div class="demo__overlay">
+        <p class="demo__label">Session Value</p>
+        <p class="demo__total" data-total><span class="demo__total-start">$0.00</span><span class="demo__total-reduced">$323.13</span></p>
+        <div class="demo__result" data-result><p>Mega Darkrai ex</p><p>$323.13</p></div>
+        <div class="demo__result" data-result><p>Fezandipiti ex</p><p>$4.32</p></div>
+        <div class="demo__result" data-result><p>Cresselia</p><p>$24.64</p></div>
+      </div>
+    </figure>
+    <button class="demo-toggle" type="button" data-toggle>Pause demo</button>
+  </section>
+
+  <section class="features" aria-label="Features">
+    <div class="features__grid">
+      <article class="feature">
+        <div class="art">
+          <div class="art__back"><img src="/assets/home/shots/value-card.webp" alt="Zeraora V’s card in evolens, with its market value below it." width="640" height="1391" loading="lazy" decoding="async"></div>
+          <div class="art__front"><img style="left:-.19%;top:8.74%" src="/assets/home/shots/value-detail.webp" alt="Zeraora V’s details: market price, card details and other Zeraora V cards." width="640" height="1391" loading="lazy" decoding="async"></div>
+        </div>
+        <h2>Find out what your cards are worth</h2>
+        <p>See market prices for the cards you own and the ones you’re after.</p>
+      </article>
+
+      <article class="feature">
+        <div class="art">
+          <div class="mini" role="img" aria-label="The evolens scanner on iPhone, showing Cresselia recognized at $24.64 and a session value of $243.13.">
+            <div class="mini__screen"></div>
+            <img class="mini__frame" src="/assets/home/phone.webp" alt="" width="980" height="2000" loading="lazy" decoding="async">
+            <img class="mini__card" src="/assets/home/cards/cresselia.webp" alt="" width="660" height="922" loading="lazy" decoding="async">
+            <p class="mini__label">Session Value</p>
+            <p class="mini__total">$243.13</p>
+            <div class="mini__result"><p>Cresselia</p><p>$24.64</p></div>
+          </div>
+        </div>
+        <h2>Scan your cards with ease</h2>
+        <p>Capture cards individually or scan an entire binder page.</p>
+      </article>
+
+      <article class="feature">
+        <div class="art">
+          <div class="art__back"><img src="/assets/home/shots/collections-home.webp" alt="The Collections tab in evolens, with several collections of cards." width="640" height="1391" loading="lazy" decoding="async"></div>
+          <div class="art__front"><img style="left:-.22%;top:2.06%" src="/assets/home/shots/collections-grid.webp" alt="A collection called holy grails, showing a grid of its cards." width="640" height="1391" loading="lazy" decoding="async"></div>
+        </div>
+        <h2>Your cards all in one place</h2>
+        <p>Keep your cards organized into collections of your own.</p>
+      </article>
+
+      <article class="feature">
+        <div class="art">
+          <div class="art__back"><img src="/assets/home/shots/explore-set.webp" alt="The 30th Celebration set in evolens, showing a grid of its cards." width="640" height="1391" loading="lazy" decoding="async"></div>
+          <div class="art__front"><img style="left:0;top:-5.55%" src="/assets/home/shots/explore-sets.webp" alt="A list of Pokémon TCG sets, grouped by era." width="640" height="1391" loading="lazy" decoding="async"></div>
+        </div>
+        <h2>Explore cards and sets</h2>
+        <p>Discover cards from every era of the Pokémon TCG.</p>
+      </article>
     </div>
-  </header>
-
-  <footer class="foot" id="download">
-    <div class="badge badge--soon"><img src="/assets/home/app-store-badge.png" width="146" height="48" alt="App Store"><span class="badge__note">Coming soon</span></div>
-
+  </section>
+</main>
+<footer class="foot">
+  <hr class="foot__rule">
+  <div class="foot__row">
+    <div class="foot__lead">
+      <a class="foot__brand" href="/"><img src="/assets/home/mark-white.svg" width="288" height="288" alt=""><span translate="no">evolens</span></a>
+      <p class="foot__tagline">Made for the cards you love.</p>
+      <span class="badge" title="Coming soon"><img src="/assets/home/app-store-badge.svg" width="144" height="48" alt="Coming soon to the App Store"><span class="badge__note" aria-hidden="true">Coming soon</span></span>
+    </div>
     <div class="foot__links">
-      <ul class="foot__social"><li>Instagram</li><li>TikTok</li><li>Youtube</li></ul>
-      <ul class="foot__legal">
-        <li><a href="/terms/">Terms</a></li>
-        <li><a href="/privacy/">Privacy</a></li>
-        <li><a href="/support/">Contact</a></li>
-      </ul>
+      <ul aria-label="Follow us"><li class="foot__head">Follow Us</li><li>Instagram</li><li>TikTok</li><li>YouTube</li></ul>
+      <ul aria-label="Info"><li class="foot__head foot__head--info">Info</li><li><a href="/terms/">Terms</a></li><li><a href="/privacy/">Privacy</a></li><li><a href="/support/">Contact</a></li></ul>
     </div>
-
-    <div class="foot__marquee" aria-hidden="true">
-      <span>evolens</span><span>evolens</span><span>evolens</span><span>evolens</span><span>evolens</span><span>evolens</span><span>evolens</span><span>evolens</span><span>evolens</span>
-    </div>
-  </footer>
-</div>
+  </div>
+  <p class="foot__legal">© 2026 evolens</p>
+</footer>
 </body>
 </html>

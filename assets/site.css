@@ -1,100 +1,67 @@
-/* evolens.app (V1): the app's legal and support pages. Colours from the evolens web tokens. */
-@font-face {
-  font-family: 'Instrument Sans';
-  src: url('/assets/instrument-sans.woff2') format('woff2');
-  font-weight: 400 700;
-  font-display: swap;
-}
-
-:root {
-  color-scheme: dark;
-  --night: #1b1b1b;
-  --text-hi: #e3e3e3;
-  --text: rgb(227 227 227 / 0.82);
-  --text-lo: #8a8a8a;
-  --line: #2a2a2a;
-  --font: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
-}
-
-* { box-sizing: border-box; }
-
-html { -webkit-text-size-adjust: 100%; }
-
-body {
-  margin: 0;
-  background: var(--night);
-  color: var(--text);
-  font-family: var(--font);
+/* evolens.app: the legal and support pages, in the home page's language. Shared parts are in base.css. */
+.doc {
+  width: min(680px, 100% - 2 * var(--gutter));
+  margin: 64px auto 96px;
+  color: #2b2b2b;
+  font-size: 17px;
   line-height: 1.55;
-  letter-spacing: -0.01em;
+  letter-spacing: -.015em;
 }
 
-main {
-  max-width: 680px;
-  margin: 0 auto;
-  padding: max(40px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right)) 64px
-    max(20px, env(safe-area-inset-left));
-}
-
-.brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 40px;
-  color: var(--text-hi);
-  font-weight: 600;
-  font-size: 22px;
-  letter-spacing: -0.04em;
-  text-decoration: none;
-}
-
-.brand svg { width: 22px; height: 22px; }
-
-h1 {
+.doc h1 {
   margin: 0;
-  color: var(--text-hi);
-  font-size: clamp(32px, 7vw, 44px);
-  line-height: 1.22;
-  letter-spacing: -0.04em;
+  color: var(--ink);
+  font-weight: 400;
+  font-size: clamp(40px, 11vw, 56px);
+  line-height: 1.0357;
+  letter-spacing: -.06em;
+}
+
+.doc .date { margin: 16px 0 40px; color: #6a6a6a; }
+
+.doc .lead { margin: 22px 0 0; font-size: 20px; line-height: 1.4; letter-spacing: -.03em; color: var(--ink); }
+
+.doc h2 {
+  margin: 56px 0 12px;
+  color: var(--ink);
   font-weight: 600;
+  font-size: 24px;
+  line-height: 1.2;
+  letter-spacing: -.04em;
 }
 
-.date { margin: 8px 0 32px; color: var(--text-lo); }
-
-h2 {
-  margin: 44px 0 12px;
-  color: var(--text-hi);
-  font-size: 22px;
-  letter-spacing: -0.02em;
+.doc h3 {
+  margin: 32px 0 8px;
+  color: var(--ink);
   font-weight: 600;
+  font-size: 18px;
+  line-height: 1.3;
+  letter-spacing: -.03em;
 }
 
-h3 { margin: 28px 0 8px; color: var(--text-hi); font-size: 17px; font-weight: 600; }
+.doc h1, .doc h2, .doc h3 { text-wrap: balance; }
 
-p, li { font-size: 16px; }
+.doc p { margin: 0 0 16px; }
 
-ul { padding-left: 20px; }
+.doc ul { margin: 0 0 16px; padding-left: 20px; }
 
-li + li { margin-top: 10px; }
+.doc li + li { margin-top: 10px; }
 
-a { color: var(--text-hi); text-underline-offset: 3px; }
+.doc strong { color: var(--ink); font-weight: 600; }
 
-a:focus-visible { outline: 2px solid rgb(255 255 255 / 0.7); outline-offset: 2px; border-radius: 2px; }
-
-.lead { font-size: 19px; color: var(--text-hi); }
-
-footer {
-  max-width: 680px;
-  margin: 0 auto;
-  padding: 24px max(20px, env(safe-area-inset-right)) max(40px, env(safe-area-inset-bottom))
-    max(20px, env(safe-area-inset-left));
-  border-top: 1px solid var(--line);
-  color: var(--text-lo);
-  font-size: 14px;
+.doc a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
 }
 
-footer nav { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-bottom: 12px; }
+@media (hover: hover) and (pointer: fine) {
+  .doc a:hover { text-decoration-thickness: 2px; }
+}
 
-footer a { color: var(--text-lo); text-decoration: none; }
-
-footer a:hover { color: var(--text-hi); }
+@media (max-width: 560px) {
+  .doc { margin: 48px auto 72px; font-size: 16px; }
+  .doc h2 { margin-top: 44px; font-size: 22px; }
+}

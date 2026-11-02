@@ -1,314 +1,391 @@
-/* evolens.app home: Figma 223KnKRHY9zoEcaprJbIGR, node 2395:6769 (440 × 1428, iPhone 16/17 Pro Max).
-   Values are Figma's. The frame's top 62 pt is the iOS status bar, so in a browser the page starts 62 pt higher. */
-@font-face {
-  font-family: 'Instrument Sans';
-  src: url('/assets/instrument-sans.woff2') format('woff2');
-  font-weight: 400 700;
-  font-display: swap;
-}
+/* evolens.app home: Figma 2647:6349. Phone and tile art are measured in --u, one Figma point at the current scale. */
 
-:root {
-  --paper: #f9fafb;
-  --ink: #181818;
-  --night: #1b1b1b;
-  --night-deep: #141414;
-  --night-line: #1f1f1f;
-  --font: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
-  --track: -0.04em;
-}
-
-* { box-sizing: border-box; }
-
-html { -webkit-text-size-adjust: 100%; background: var(--night); }
-
-body {
-  margin: 0;
-  background: var(--night);
-  font-family: var(--font);
-  font-weight: 600;
-  letter-spacing: var(--track);
-  -webkit-font-smoothing: antialiased;
-}
-
-a { color: inherit; text-decoration: none; }
-
-a:focus-visible, .gallery:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; border-radius: 4px; }
-
-ul { list-style: none; margin: 0; padding: 0; }
-
-/* The footer reaches the bottom of a tall window. */
-.page { min-height: 100vh; display: flex; flex-direction: column; }
-
-/* The white card: nav, headline, badge, and the gallery running off its rounded bottom edge. */
+/* Hero */
 .hero {
-  background: var(--paper);
-  color: var(--ink);
-  border-radius: 0 0 35px 35px;
-  overflow: hidden;
-  padding-top: max(12px, env(safe-area-inset-top));
-}
-
-.hero__nav {
-  display: flex;
-  justify-content: space-between;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 max(20px, env(safe-area-inset-right)) 0 max(30px, env(safe-area-inset-left));
-  font-size: 16px;
-  line-height: 20px;
+  --phone-w: min(490px, 86vw);
+  --u: calc(var(--phone-w) / 490);
+  position: relative;
+  overflow: clip;
+  text-align: center;
 }
 
 .hero__title {
-  max-width: 344px;
-  margin: 43px auto 0;
-  font-size: 32px;
-  font-weight: 600;
-  line-height: 1.22;
-  letter-spacing: -1.28px;
-  text-align: center;
+  margin: 56px auto 0;
+  font-weight: 400;
+  font-size: min(56px, 14vw);
+  line-height: 1.0357;
+  letter-spacing: -.06em;
 }
 
-.badge {
-  display: block;
-  width: 146px;
-  height: 48px;
-  margin: 26px auto 0;
+.hero__sub {
+  margin: 22px auto 0;
+  padding: 0 var(--gutter);
+  font-size: clamp(18px, 5.2vw, 20px);
+  line-height: 24px;
+  letter-spacing: -.06em;
 }
 
-.badge img { display: block; width: 146px; height: 48px; }
+.hero__badge { margin-top: 39px; height: 48px; }
 
-.badge--soon { position: relative; }
-
-.badge__note {
-  display: block;
-  margin-top: 6px;
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  text-align: center;
-  opacity: 0.55;
-}
-
-/* Two app screens side by side, 21 pt apart, cut off by the card's bottom edge (633 of their 688 pt). On a phone the
-   first is centred and the second peeks in from the right; they scroll sideways. */
-.gallery {
-  margin-top: 36px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-}
-
-.gallery::-webkit-scrollbar { display: none; }
-
-.gallery__track {
-  display: flex;
-  gap: 21px;
-  width: max-content;
-  padding: 0 calc((100vw - 325px) / 2);
-}
-
-.screen {
-  display: block;
-  flex: none;
-  width: 325px;
-  height: 633px;
-  border-radius: 24px 24px 0 0;
-  scroll-snap-align: center;
+/* Demo phone. The hero clips it where the dark section begins, 720 points below its top. */
+.demo {
+  position: relative;
+  width: var(--phone-w);
+  height: calc(var(--u) * 720);
+  margin: 35px auto 0;
+  cursor: default;
+  touch-action: manipulation;
   user-select: none;
-  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
-/* My Cards, at the 325 pt phone's scale (Figma 2395:7216). */
-.cards-screen { position: relative; overflow: hidden; background: #0f0f0f; }
+.demo p { margin: 0; }
 
-.cs { position: absolute; left: 0; top: -2.07px; width: 325px; height: 706px; color: #fff; }
-
-.cs img { display: block; }
-
-.cs__status {
+.demo__screen,
+.demo__view {
   position: absolute;
-  left: 14.03px;
-  top: 0;
-  width: 296.93px;
-  height: 45.8px;
-  display: flex;
-  align-items: center;
-  gap: 113.75px;
-  padding: 15.5px 17.73px 14.03px;
-}
-
-.cs__time, .cs__levels { flex: 1 0 0; display: flex; justify-content: center; align-items: center; }
-
-.cs__time {
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
-  font-size: 12.56px;
-  font-weight: 590;
-  letter-spacing: 0;
-  line-height: 16.25px;
-  padding-top: 1.1px;
-}
-
-.cs__levels { gap: 5.17px; height: 16.25px; padding: 0.74px 0.74px 0 0; }
-
-.cs__battery { margin-left: -0.35px; }
-
-.cs__brand { position: absolute; left: 18.47px; top: 57.61px; width: 23.64px; height: 23.64px; }
-
-.cs__mark { position: absolute; inset: 0; }
-
-.cs__mark img { position: absolute; left: -88.64px; top: -88.64px; }
-
-.cs__word {
-  position: absolute;
-  left: 28.81px;
-  top: -1.11px;
-  color: #f9f9f9;
-  font-size: 19.2px;
-  letter-spacing: -1.15px;
-  white-space: nowrap;
-}
-
-.cs__actions { position: absolute; left: 227.5px; top: 60.57px; display: flex; gap: 14.03px; }
-
-.cs__tabs {
-  position: absolute;
-  left: 21.42px;
-  top: 99.72px;
-  width: 277.73px;
-  display: flex;
-  justify-content: space-between;
-  font-size: 10.34px;
-  letter-spacing: -0.21px;
-  line-height: 13px;
-  white-space: nowrap;
-}
-
-.cs__tab { color: rgb(255 255 255 / 0.4); display: flex; align-items: center; gap: 4.43px; }
-
-.cs__tab--on { color: #fff; }
-
-.cs__count {
-  background: #202020;
-  border-radius: 5.17px;
-  padding: 1.48px 2.95px;
-  font-size: 8.13px;
-  font-weight: 500;
-  line-height: 10px;
-  letter-spacing: -0.16px;
-}
-
-.cs__tab-line { position: absolute; left: 18.47px; top: 122.06px; }
-
-.cs__rule { position: absolute; left: 0; top: 122.49px; }
-
-.cs__sort {
-  position: absolute;
-  left: 8.13px;
-  top: 130.74px;
-  width: 306.53px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 4.43px 7.39px;
-}
-
-.cs__sort-label {
-  display: flex;
-  align-items: center;
-  gap: 1.48px;
-  color: #e4e4e4;
-  font-size: 9.6px;
-  font-weight: 500;
-  letter-spacing: -0.19px;
-  line-height: 12px;
-}
-
-.cs__grid {
-  position: absolute;
-  left: 10.34px;
-  top: 159.55px;
-  width: 304.32px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8.86px;
-  align-items: center;
-}
-
-.cs__grid img { width: 100%; aspect-ratio: 660 / 920; object-fit: cover; border-radius: 4.43px; }
-
-.cs__grid .cs__r5 { border-radius: 5.17px; }
-
-.cs__grid .cs__wide { aspect-ratio: 640 / 890; border-radius: 3.69px; box-shadow: 0 0.74px 44.32px rgb(0 0 0 / 0.12); }
-
-.cs__dock { position: absolute; left: 50%; top: 637.44px; transform: translateX(-50%); display: flex; align-items: center; gap: 10.34px; }
-
-.cs__pill {
-  display: flex;
-  gap: 17.73px;
-  padding: 13.3px 17.73px;
-  border-radius: 29.55px;
-  background: rgb(40 40 40 / 0.95);
-  box-shadow: 0 0 11.08px rgb(0 0 0 / 0.15), inset 0 0 17.21px rgb(255 255 255 / 0.07);
-}
-
-.cs__pill--round { padding: 14.77px; }
-
-/* The dark footer: 35 pt under the card, its own rounded top. */
-.foot {
-  margin-top: 35px;
-  background: var(--night-deep);
-  border-top: 1px solid var(--night-line);
-  border-radius: 35px 35px 0 0;
-  padding: 63px 0 max(58px, env(safe-area-inset-bottom));
-  color: #fff;
+  left: calc(var(--u) * 21);
+  top: calc(var(--u) * 11);
+  width: calc(var(--u) * 447);
+  height: calc(var(--u) * 709);
+  border-radius: calc(var(--u) * 52) calc(var(--u) * 52) 0 0;
   overflow: hidden;
-  flex: 1 0 auto;
 }
 
-.foot .badge { margin-top: 0; }
+.demo__screen,
+.mini__screen { background: url('/assets/home/screen.webp') center / 100% 100%; }
 
-.foot__links {
-  display: flex;
-  justify-content: space-between;
-  width: 317px;
-  margin: 69px auto 0;
-  font-size: 16px;
-  line-height: 20px;
-  letter-spacing: -0.64px;
+/* Fezandipiti's screen color. Darkrai and Cresselia use the neutral screen beneath. */
+.demo__tint {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(#551b50, #371539);
+  opacity: 0;
 }
 
-.foot__links ul { display: flex; flex-direction: column; gap: 25px; }
+.demo__frame {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+}
 
-.foot__social { font-weight: 600; width: 72px; }
+/* Cards are 329 × 460 at (81, 169) on the phone. They travel inside the screen, clipped to it. */
+.demo__card {
+  position: absolute;
+  left: calc(var(--u) * 60);
+  top: calc(var(--u) * 158);
+  width: calc(var(--u) * 329);
+  height: calc(var(--u) * 460);
+  border-radius: calc(var(--u) * 16);
+  box-shadow: 0 0 calc(var(--u) * 22.2) rgb(0 0 0 / .4);
+}
 
-.foot__legal { font-weight: 500; color: rgb(255 255 255 / 0.5); width: 57px; }
+.demo__card--later { opacity: 0; }
 
-.foot__legal a:hover, .foot__social a:hover { color: #fff; opacity: 0.8; }
+.demo__card--glow {
+  box-shadow: 0 0 calc(var(--u) * 22.2) rgb(0 0 0 / .53), 0 0 calc(var(--u) * 162.3) rgb(141 192 223 / .36);
+}
 
-.foot__marquee {
-  display: flex;
+.demo__card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+}
+
+.demo__overlay {
+  position: absolute;
+  inset: 0;
+  font-family: 'Geist', var(--font);
+  color: #fff;
+  pointer-events: none;
+}
+
+.demo__label {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(var(--u) * 93);
+  font-size: max(11px, var(--u) * 14);
+  line-height: 1.3;
+  letter-spacing: -.06em;
+  color: rgb(255 255 255 / .5);
+}
+
+.demo__total {
+  position: absolute;
+  left: calc(var(--u) * .5);
+  right: 0;
+  top: calc(var(--u) * 111);
+  font-size: max(17px, var(--u) * 24);
+  line-height: 1.3;
+  letter-spacing: -.06em;
+  font-variant-numeric: tabular-nums;
+}
+
+.demo__total-reduced { display: none; }
+
+.demo.is-live .demo__total-start { display: none; }
+
+.demo__row {
+  display: inline-flex;
   justify-content: center;
-  gap: 9px;
-  margin-top: 69px;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 17px;
-  letter-spacing: -0.56px;
+  height: 1.3em;
+}
+
+.demo__cell {
+  position: relative;
+  width: calc(1ch - .06em);
+}
+
+.demo__cell > span {
+  position: absolute;
+  left: -.5em;
+  right: -.5em;
+  top: 0;
+  text-align: center;
+  letter-spacing: 0;
+  opacity: 0;
+}
+
+.demo__result {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(var(--u) * 355);
+  line-height: 1.3;
+  text-shadow: 0 calc(var(--u) * 2) calc(var(--u) * 4) rgb(0 0 0 / .51);
   white-space: nowrap;
 }
 
-.foot__marquee span:nth-child(1), .foot__marquee span:nth-child(9) { color: rgb(255 255 255 / 0.05); }
-.foot__marquee span:nth-child(2), .foot__marquee span:nth-child(8) { color: rgb(255 255 255 / 0.15); }
-.foot__marquee span:nth-child(3), .foot__marquee span:nth-child(7) { color: rgb(255 255 255 / 0.35); }
-.foot__marquee span:nth-child(4), .foot__marquee span:nth-child(6) { color: rgb(255 255 255 / 0.66); }
-.foot__marquee span:nth-child(5) { color: rgb(255 255 255 / 0.85); }
+.demo__result p { opacity: 0; letter-spacing: -.06em; }
 
-/* Wider screens: the same column, centred; both screens shown whole side by side, no scrolling. */
-@media (min-width: 700px) {
-  .hero { padding-top: 32px; }
-  .hero__title { margin-top: 72px; max-width: 520px; font-size: 48px; letter-spacing: -1.92px; }
-  .badge { margin-top: 32px; }
-  .gallery { margin-top: 56px; overflow: visible; scroll-snap-type: none; }
-  .gallery__track { margin: 0 auto; padding: 0; }
+.demo__result p:first-child {
+  font-weight: 500;
+  font-size: calc(var(--u) * 20);
+  color: rgb(255 255 255 / .8);
+}
+
+.demo__result p:last-child {
+  font-weight: 600;
+  font-size: calc(var(--u) * 64);
+}
+
+/* Appears on keyboard focus, and whenever the demo is paused (clicking the phone pauses it too). */
+.demo-toggle {
+  position: absolute;
+  left: 50%;
+  bottom: 24px;
+  translate: -50% 0;
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 999px;
+  background: #fff;
+  color: #000;
+  font: 500 14px/1 var(--font);
+  letter-spacing: -.02em;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 150ms ease;
+}
+
+.demo-toggle:focus-visible,
+.demo-toggle.is-shown { opacity: 1; pointer-events: auto; }
+
+/* Reduced motion, with or without the script: one finished recognition, held. */
+@media (prefers-reduced-motion: reduce) {
+  .demo__card:first-child img { opacity: .5; }
+  .demo__result:first-of-type p { opacity: 1; }
+  .demo__total-start { display: none; }
+  .demo__total-reduced { display: inline; }
+  .demo-toggle { display: none; }
+}
+
+/* Features */
+.features {
+  position: relative;
+  z-index: 1;
+  background: var(--night);
+  box-shadow: 0 0 75px rgb(0 0 0 / .5);
+  padding: 64px clamp(20px, 2.9vw, 50px) 70px;
+}
+
+.features__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 383px));
+  gap: 48px clamp(20px, 1.85vw, 32px);
+  justify-content: center;
+}
+
+.feature h2 {
+  margin: 21px 0 0;
+  max-width: 302px;
+  color: var(--text-hi);
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -.04em;
+}
+
+.feature > p {
+  margin: 6px 0 0;
+  max-width: 302px;
+  min-height: 36px;
+  color: var(--text-lo);
+  font-size: 15px;
+  line-height: 18px;
+  letter-spacing: -.04em;
+}
+
+.art {
+  --u: calc(100cqw / 383);
+  position: relative;
+  container-type: inline-size;
+  aspect-ratio: 383 / 351;
+  border-radius: 19px;
+  overflow: hidden;
+  background: var(--well);
+  pointer-events: none;
+}
+
+.art::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 50px rgb(0 0 0 / .25);
+}
+
+.art__back,
+.art__front {
+  position: absolute;
+  border-radius: calc(var(--u) * 20);
+  overflow: hidden;
+  box-shadow: 0 4px 27.8px rgb(255 255 255 / .05), 0 4px 32.8px rgb(0 0 0 / .3);
+}
+
+.art__back::after,
+.art__front::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.art__back {
+  left: calc(var(--u) * 18);
+  top: calc(var(--u) * 42);
+  width: calc(var(--u) * 186);
+  height: calc(var(--u) * 365);
+}
+
+.art__back img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+.art__back::after { box-shadow: inset 0 calc(var(--u) * -100) calc(var(--u) * 34.5) rgb(0 0 0 / .59); }
+
+.art__front {
+  left: calc(var(--u) * 224);
+  top: calc(var(--u) * -63);
+  width: calc(var(--u) * 214);
+  height: calc(var(--u) * 396);
+}
+
+.art__front img {
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 117.42%;
+  max-width: none;
+}
+
+.art__front::after { box-shadow: inset 0 calc(var(--u) * -27) calc(var(--u) * 34.5) rgb(0 0 0 / .59); }
+
+/* Scan tile: the phone again, smaller, in Figma's finished state. */
+.mini {
+  position: absolute;
+  left: calc(var(--u) * 67);
+  top: calc(var(--u) * 23);
+  width: calc(var(--u) * 250);
+  height: calc(var(--u) * 510);
+  font-family: 'Geist', var(--font);
+  color: #fff;
+  text-align: center;
+}
+
+.mini p { margin: 0; }
+
+.mini__screen {
+  position: absolute;
+  left: calc(var(--u) * 10);
+  top: calc(var(--u) * 7);
+  width: calc(var(--u) * 231);
+  height: calc(var(--u) * 496);
+  border-radius: calc(var(--u) * 25);
+}
+
+.mini__frame { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
+
+.mini__card {
+  position: absolute;
+  left: calc(var(--u) * 41);
+  top: calc(var(--u) * 112);
+  width: calc(var(--u) * 169);
+  height: calc(var(--u) * 236);
+  border-radius: calc(var(--u) * 9);
+  box-shadow: 0 0 calc(var(--u) * 22.2) rgb(0 0 0 / .53), 0 0 calc(var(--u) * 162.3) rgb(141 192 223 / .36);
+}
+
+.mini__label,
+.mini__total,
+.mini__result {
+  position: absolute;
+  left: 0;
+  right: 0;
+  line-height: 1.3;
+  letter-spacing: -.06em;
+  white-space: nowrap;
+}
+
+.mini__label { top: calc(var(--u) * 49); font-size: calc(var(--u) * 10); color: rgb(255 255 255 / .5); }
+
+.mini__total { top: calc(var(--u) * 62); font-size: calc(var(--u) * 20); }
+
+.mini__result { top: calc(var(--u) * 176); }
+
+.mini__result p { letter-spacing: -.06em; }
+
+.mini__result p:first-child {
+  font-weight: 500;
+  font-size: calc(var(--u) * 20);
+  text-shadow: 0 0 calc(var(--u) * 6.5) rgb(0 0 0 / .54);
+}
+
+.mini__result p:last-child {
+  font-weight: 600;
+  font-size: calc(var(--u) * 64);
+  text-shadow: 0 0 calc(var(--u) * 7.7) rgb(0 0 0 / .5);
+}
+
+/* Four across: a title that wraps keeps its row's descriptions level. */
+@media (min-width: 1280px) {
+  .features__grid { row-gap: 0; }
+  .feature { display: grid; grid-row: span 3; grid-template-rows: subgrid; row-gap: 0; }
+}
+
+@media (max-width: 1279px) {
+  .features__grid { grid-template-columns: repeat(2, minmax(0, 440px)); }
+}
+
+@media (max-width: 639px) {
+  .features__grid { grid-template-columns: minmax(0, 480px); }
+  .feature > p { min-height: 0; }
+}
+
+@media (max-width: 560px) {
+  .hero__title { margin-top: 40px; }
 }
