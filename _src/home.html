@@ -2,27 +2,23 @@
   <section class="hero">
     <h1 class="hero__title">Scan, track,&nbsp;<br>and value your<br>Pokémon cards</h1>
     <p class="hero__sub">Bring your entire collection into focus.</p>
-    <div class="hero__badge">{{BADGE_NOTED}}</div>
+    <div class="hero__badge">{{BADGE}}</div>
 
     <figure class="demo" data-demo role="img" aria-label="Demonstration: evolens recognizes a card held up to the iPhone’s camera, shows its name and value, and adds it to the session total. Cards and prices are examples.">
-      <div class="demo__screen">{{DEMO_TINTS}}</div>
+      <div class="demo__screen">{{DEMO_SCREEN}}</div>
       <img class="demo__frame" src="/assets/home/phone.webp" alt="" width="980" height="2000" fetchpriority="high">
 
       <div class="demo__view">
         <div class="demo__stack" data-stack>
 {{DEMO_CARDS}}
           <div class="demo__rig">
-            <div class="demo__glass"><span class="demo__beam" data-beam></span><span class="demo__sheen" data-sheen></span></div>
-            <span class="demo__box" data-box></span>
-            <span class="demo__box demo__box--lock" data-lock></span>
+            <div class="demo__glass"><span class="demo__beam" data-beam></span></div>
           </div>
         </div>
-{{DEMO_EDGES}}
       </div>
 
       <div class="demo__overlay">
         <p class="demo__label">Session Value</p>
-        <span class="demo__halo" data-halo></span>
         <p class="demo__total" data-total><span class="demo__total-start">$0.00</span><span class="demo__total-reduced">{{DEMO_FIRST_VALUE}}</span></p>
 {{DEMO_RESULTS}}
       </div>
@@ -43,13 +39,13 @@
 
       <article class="feature">
         <div class="art">
-          <div class="mini" role="img" aria-label="The evolens scanner on iPhone, showing Cresselia recognized at $24.64 and a session value of $243.13.">
+          <div class="mini" role="img" aria-label="The evolens scanner on iPhone, showing {{TILE_NAME}} recognized at {{TILE_VALUE}} and a session value of {{TILE_TOTAL}}.">
             <div class="mini__screen"></div>
             <img class="mini__frame" src="/assets/home/phone.webp" alt="" width="980" height="2000" loading="lazy" decoding="async">
             <img class="mini__card" src="/assets/home/cards/cresselia.webp" alt="" width="660" height="922" loading="lazy" decoding="async">
             <p class="mini__label">Session Value</p>
-            <p class="mini__total">$243.13</p>
-            <div class="mini__result"><p>Cresselia</p><p>$24.64</p></div>
+            <p class="mini__total">{{TILE_TOTAL}}</p>
+            <div class="mini__result"><p>{{TILE_NAME}}</p><p>{{TILE_VALUE}}</p></div>
           </div>
         </div>
         <h2>Scan your cards with ease</h2>

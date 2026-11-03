@@ -102,7 +102,7 @@
   border-radius: inherit;
 }
 
-/* The scanner: a light that reads down the card and a sheen on recognition (inside the card), and the app's scan box. */
+/* A soft light that reads down the card. */
 .demo__glass {
   position: absolute;
   inset: 0;
@@ -115,42 +115,19 @@
   left: 0;
   right: 0;
   top: 0;
-  height: 26%;
-  background: linear-gradient(transparent, rgb(255 255 255 / .1) 55%, rgb(255 255 255 / .42) 96%, rgb(255 255 255 / .9));
+  height: 42%;
+  background: linear-gradient(transparent, rgb(255 255 255 / .24), transparent);
   opacity: 0;
 }
 
-.demo__sheen {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(105deg, transparent 28%, rgb(255 255 255 / .62) 50%, transparent 72%);
-  transform: translateX(-120%);
-}
-
-.demo__box {
-  position: absolute;
-  inset: calc(var(--u) * -7);
-  border: max(1.5px, var(--u) * 1.5) solid #fff;
-  border-radius: calc(var(--u) * 21);
-  box-shadow: 0 0 calc(var(--u) * 12.5) rgb(0 0 0 / .36);
-  opacity: 0;
-}
-
-.demo__box--lock {
-  border-width: max(2px, var(--u) * 2.25);
-  box-shadow: 0 0 calc(var(--u) * 16) rgb(255 255 255 / .6);
-}
-
-/* The light around the screen's edge on a recognition, in the card's color: the app's soft glow and fine line. */
+/* The soft light around the screen's edge on a recognition, in the card's color. It sits under the phone's frame, and runs
+   on past the cut-off so it never draws a bottom edge the phone doesn't have there. */
 .demo__edge {
   position: absolute;
-  inset: 0;
+  inset: 0 0 calc(var(--u) * -120) 0;
   border-radius: inherit;
-  box-shadow:
-    inset 0 0 calc(var(--u) * 34) calc(var(--u) * 2) var(--light),
-    inset 0 0 calc(var(--u) * 3) calc(var(--u) * 1) var(--light);
+  box-shadow: inset 0 0 calc(var(--u) * 30) var(--light);
   opacity: 0;
-  pointer-events: none;
 }
 
 .demo__overlay {
@@ -184,18 +161,6 @@
 }
 
 .demo__total-reduced { display: none; }
-
-/* The total catches light as a value lands in it. */
-.demo__halo {
-  position: absolute;
-  left: 50%;
-  top: calc(var(--u) * 126);
-  width: calc(var(--u) * 180);
-  height: calc(var(--u) * 90);
-  margin: calc(var(--u) * -45) 0 0 calc(var(--u) * -90);
-  background: radial-gradient(closest-side, rgb(255 255 255 / .2), transparent);
-  opacity: 0;
-}
 
 .demo.is-live .demo__total-start { display: none; }
 
@@ -245,9 +210,6 @@
   font-size: calc(var(--u) * 64);
 }
 
-/* The value that travels up into the session total. */
-.demo__price--flight { position: absolute; left: 0; right: 0; top: calc(var(--u) * 26); }
-
 /* Appears on keyboard focus, and whenever the demo is paused (clicking the phone pauses it too). */
 .demo-toggle {
   position: absolute;
@@ -272,7 +234,7 @@
 /* Reduced motion, with or without the script: one finished recognition, held. */
 @media (prefers-reduced-motion: reduce) {
   .demo__card:first-child { opacity: .5; }
-  .demo__result:first-of-type :is(.demo__name, .demo__price:not(.demo__price--flight)) { opacity: 1; }
+  .demo__result:first-of-type p { opacity: 1; }
   .demo__total-start { display: none; }
   .demo__total-reduced { display: inline; }
   .demo-toggle { display: none; }

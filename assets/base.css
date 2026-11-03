@@ -29,12 +29,21 @@
 
 html { -webkit-text-size-adjust: 100%; background: var(--paper); }
 
-/* At the footer the page's canvas turns dark, so scrolling past the end shows the footer's color, not white. */
+/* Past the end of the page shows the footer's color, not white. WebKit takes that area's color from the body's background
+   color over the root's, so the body paints its white as an image; the fixed layer covers browsers that show neither. */
 html.at-foot { background: var(--night); }
+
+html.at-foot body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: var(--night);
+}
 
 body {
   margin: 0;
-  background: var(--paper);
+  background-image: linear-gradient(var(--paper), var(--paper));
   color: var(--ink);
   font-family: var(--font);
   -webkit-font-smoothing: antialiased;
@@ -90,20 +99,6 @@ body {
 .badge { position: relative; display: inline-block; vertical-align: top; }
 
 .badge img { display: block; width: auto; height: 48px; }
-
-/* Below the badge, outside Apple's clear space (a quarter of its height). */
-.badge__note {
-  position: absolute;
-  top: calc(100% + 12px);
-  left: 0;
-  right: 0;
-  font-size: 13px;
-  line-height: 16px;
-  letter-spacing: -.02em;
-  text-align: center;
-  white-space: nowrap;
-  color: #6a6a6a;
-}
 
 /* Footer */
 .foot {
@@ -164,8 +159,6 @@ body {
   line-height: 18px;
   letter-spacing: -.04em;
 }
-
-.foot .badge__note { color: var(--text-lo); }
 
 .foot__links {
   display: flex;

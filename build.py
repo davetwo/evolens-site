@@ -9,7 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 
 # The App Store page, once evolens is live there: https://apps.apple.com/app/id6827268329 (a 404 on 2026-11-02).
-# Empty: every badge says "Coming soon" and links nowhere.
+# Empty: every badge links nowhere.
 APP_STORE_URL = ""
 # evolens' profiles. A name with no address is shown as plain text, never as a dead link.
 SOCIAL = {"Instagram": "", "TikTok": "", "YouTube": ""}
@@ -19,27 +19,25 @@ PAGES = {"privacy": ("Privacy Policy · evolens", "/privacy/", "What the evolens
          "terms": ("Terms of Use · evolens", "/terms/", "The terms that apply to the evolens iPhone app and evolens Pro.")}
 
 # The hero's scripted scans, in order: name, value in cents, art, edge light, screen color (top, bottom; None: neutral).
-# Darkrai, Fezandipiti, Cresselia and their colors are Figma's. Mew ex (30C 152/128), Team Rocket's Mewtwo ex (DRI 231/182)
-# and Gardevoir ex (PAF 233/091) are Near Mint holofoil, TCGplayer market via JustTCG, as evolens' pricing observed them on
-# 2026-10-16 (pricing/build/live/raw). These are examples, not live prices.
+# Values are TCGplayer's market price for each exact printing's holofoil, read on 2026-11-02 (product ids, as bound in
+# evolens' pricing: 704873, 676100, 717605, 633031, 535085, 560382). They're fixed here, so they age until updated.
 DEMO_CARDS = [
-    ("Mega Darkrai ex", 32313, "mega-darkrai-ex", "#d6e77a", None),
-    ("Fezandipiti ex", 432, "fezandipiti-ex", "#f58fcb", ("#551b50", "#371539")),
-    ("Mew ex", 8565, "mew-ex", "#f0cf85", ("#403419", "#392e15")),
-    ("Team Rocket’s Mewtwo ex", 35528, "team-rockets-mewtwo-ex", "#e0708a", ("#4a1826", "#2f111c")),
-    ("Gardevoir ex", 16704, "gardevoir-ex", "#7fe0dc", ("#123f44", "#0e2e33")),
-    ("Cresselia", 2464, "cresselia", "#a9d3ec", None),
+    ("Mega Darkrai ex", 13765, "mega-darkrai-ex", "#c6cf9f", None),
+    ("Fezandipiti ex", 3770, "fezandipiti-ex", "#d9a6c8", ("#551b50", "#371539")),
+    ("Mew ex", 6512, "mew-ex", "#cfc4a6", ("#403419", "#392e15")),
+    ("Team Rocket’s Mewtwo ex", 32347, "team-rockets-mewtwo-ex", "#d39aa8", ("#4a1826", "#2f111c")),
+    ("Gardevoir ex", 16067, "gardevoir-ex", "#a3d4d2", ("#123f44", "#0e2e33")),
+    ("Cresselia", 2487, "cresselia", "#b4d0e2", None),
 ]
 
 BADGE_IMG = '<img src="/assets/home/app-store-badge.svg" width="144" height="48" alt="{alt}">'
 
 
-def badge(note=False):
-    """Apple's badge. Before launch it links nowhere; `note` adds the visible caption where there's room for one."""
+def badge():
+    """Apple's badge. Before launch it links nowhere."""
     if APP_STORE_URL:
         return f'<a class="badge" href="{APP_STORE_URL}">{BADGE_IMG.format(alt="Download on the App Store")}</a>'
-    caption = '<span class="badge__note" aria-hidden="true">Coming soon</span>' if note else ""
-    return f'<span class="badge" title="Coming soon">{BADGE_IMG.format(alt="Coming soon to the App Store")}{caption}</span>'
+    return f'<span class="badge">{BADGE_IMG.format(alt="Coming soon to the App Store")}</span>'
 
 
 def nav(right):
@@ -56,7 +54,7 @@ def footer():
     <div class="foot__lead">
       <a class="foot__brand" href="/"><img src="/assets/home/mark-white.svg" width="48" height="48" alt=""><span translate="no">evolens</span></a>
       <p class="foot__tagline">Made for the cards you love.</p>
-      {badge(note=True)}
+      {badge()}
     </div>
     <div class="foot__links">
       <ul aria-label="Follow us"><li class="foot__head">Follow Us</li>{social}</ul>
@@ -81,11 +79,13 @@ def demo_parts():
         priority = "high" if i == 0 else "low"
         cards.append(f'          <div class="demo__card{later}" data-card><img src="/assets/home/cards/{art}.webp" alt="" '
                      f'width="660" height="922" fetchpriority="{priority}"></div>')
-        edges.append(f'        <div class="demo__edge" data-edge="{i}" style="--light:{light}"></div>')
+        edges.append(f'<div class="demo__edge" data-edge="{i}" style="--light:{light}"></div>')
         results.append(f'        <div class="demo__result" data-result data-cents="{cents}"><p class="demo__name">{name}</p>'
-                       f'<p class="demo__price">{money(cents)}</p><p class="demo__price demo__price--flight">{money(cents)}</p></div>')
-    return {"{{DEMO_TINTS}}": "".join(tints), "{{DEMO_CARDS}}": "\n".join(cards), "{{DEMO_EDGES}}": "\n".join(edges),
-            "{{DEMO_RESULTS}}": "\n".join(results), "{{DEMO_FIRST_VALUE}}": money(DEMO_CARDS[0][1])}
+                       f'<p class="demo__price">{money(cents)}</p></div>')
+    last = DEMO_CARDS[-1]
+    return {"{{DEMO_SCREEN}}": "".join(tints + edges), "{{DEMO_CARDS}}": "\n".join(cards), "{{DEMO_RESULTS}}": "\n".join(results),
+            "{{DEMO_FIRST_VALUE}}": money(DEMO_CARDS[0][1]), "{{TILE_NAME}}": last[0], "{{TILE_VALUE}}": money(last[1]),
+            "{{TILE_TOTAL}}": money(sum(c[1] for c in DEMO_CARDS))}
 
 
 def page(title, path, head, body, description=""):
@@ -105,7 +105,7 @@ def page(title, path, head, body, description=""):
 </head>
 <body>
 {body}
-<script>new IntersectionObserver(([e]) => document.documentElement.classList.toggle('at-foot', e.isIntersecting)).observe(document.querySelector('.foot'))</script>
+<script>new IntersectionObserver(([e]) => {{ document.documentElement.classList.toggle('at-foot', e.isIntersecting); document.querySelector('meta[name=theme-color]').content = e.isIntersecting ? '#191919' : '#ffffff'; }}).observe(document.querySelector('.foot'))</script>
 </body>
 </html>
 """
@@ -115,7 +115,7 @@ email = sys.argv[1] if len(sys.argv) > 1 else ""
 if "@" not in email:
     sys.exit("usage: python3 -I build.py <contact email>")
 
-home = (ROOT / "_src" / "home.html").read_text().replace("{{BADGE_NOTED}}", badge(note=True))
+home = (ROOT / "_src" / "home.html").read_text().replace("{{BADGE}}", badge())
 for marker, html in demo_parts().items():
     home = home.replace(marker, html)
 (ROOT / "index.html").write_text(page(

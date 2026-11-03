@@ -1,11 +1,10 @@
 // The hero's scan demonstration, written as one score: every element's motion is a fixed function of loop time
 // (Web Animations, transform and opacity only). No script runs per frame, the loop's first and last moments are the
-// same by construction, and pausing is one call. Values are dated examples set in build.py; nothing is fetched.
+// same by construction, and pausing is one call. Values are set in build.py; nothing is fetched.
 //
-// A scan is the app's own recognition (Motion.swift, SingleScanScore.swift, AddedFeedback.swift): the card arrives, the
-// scan box closes in and reads it, then in one moment the box locks on, the card takes a knock, a sheen crosses it and
-// the screen's edge lights in its color. The value pops up, travels to the session total, and the total rolls and
-// catches light. The card is dealt away as the next one arrives.
+// A scan, kept simple: the card arrives, a soft light reads down it, it takes the app's knock as it's recognized, and the
+// screen's edge glows gently in its color. Its name and value appear and hold, the session total rolls, and the card is
+// dealt away as the next one arrives.
 (() => {
   const demo = document.querySelector('[data-demo]');
   if (!demo || !demo.animate) return;
@@ -18,14 +17,12 @@
 
   // Times in seconds. A card's beats are measured from when it starts to arrive.
   const SETTLED = 0.62; // First paint is Darkrai at rest, so the score joins here, as its scan begins.
-  const BOX = 0.62;
-  const READ = 0.64;
-  const RECOGNIZED = 1.14;
-  const PRICE = RECOGNIZED + 0.05;
+  const READ = 0.62;
+  const RECOGNIZED = 1.32;
+  const PRICE = RECOGNIZED + 0.04;
   const NAME = RECOGNIZED + 0.08;
-  const FLIGHT = RECOGNIZED + 0.42;
-  const TOTAL = RECOGNIZED + 0.62;
-  const LEAVE = RECOGNIZED + 1.62;
+  const TOTAL = RECOGNIZED + 0.6;
+  const LEAVE = RECOGNIZED + 3;
   const BEAT = LEAVE + 0.1;
   const STARTS = cards.map((_, i) => i * BEAT);
   const RESET = STARTS[cards.length - 1] + LEAVE + 0.1;
@@ -55,24 +52,21 @@
   const DRAWER = 'cubic-bezier(.32, .72, 0, 1)';
   const SNAP = curve('linear', 0.001);
   const TOSS = spring(0.46, 0.8); // A tossed card decelerating hard into place.
-  const BOX_IN = spring(0.3, 0.98);
-  const LOCK = spring(0.2, 0.55); // The box's small kick as it locks on.
-  const POP = spring(0.3, 0.62); // The value: quick, a little past, a decisive stop.
-  const LIFT_AWAY = spring(0.42, 0.8);
-  const DIGIT = spring(0.3, 0.82);
-  const FLIGHT_PATH = spring(0.36, 0.98);
+  const POP = spring(0.36, 0.76); // The value: quick, barely past, and settled.
+  const SETTLE = spring(0.42, 0.8);
+  const DIGIT = spring(0.36, 0.86);
   const FADE_IN = curve(STRONG_OUT, 0.1);
   const READ_RUN = curve('cubic-bezier(.45, 0, .55, 1)', RECOGNIZED - READ);
-  const SHEEN_RUN = curve('cubic-bezier(.4, 0, .6, 1)', 0.34);
-  const DIM = curve(STRONG_OUT, 0.12);
-  const FADE_OUT = curve(STRONG_OUT, 0.12);
+  const DIM = curve(STRONG_OUT, 0.22);
+  const BRIGHTEN = curve(STRONG_OUT, 0.12);
+  const FADE_OUT = curve(STRONG_OUT, 0.18);
   const DIGIT_OUT = curve(STRONG_OUT, 0.18);
   const PICK_UP = curve(STRONG_OUT, 0.06);
   const DEAL = curve('cubic-bezier(.77, 0, .175, 1)', 0.3);
   const AMBIENT = curve(DRAWER, 0.34);
 
-  // The knock: a stiff, light-damped spring absorbing an impulse. Pressed in 4.5 %, recoiling a little past where it was.
-  const IMPACT = { response: 0.2, damping: 0.5, depth: 0.045, lasts: 0.34 };
+  // The knock: a stiff, light-damped spring absorbing an impulse. Pressed in 3 %, recoiling a little past where it was.
+  const IMPACT = { response: 0.2, damping: 0.5, depth: 0.03, lasts: 0.34 };
   const knock = (() => {
     const w = (2 * Math.PI) / IMPACT.response;
     const wd = w * Math.sqrt(1 - IMPACT.damping ** 2);
@@ -126,7 +120,7 @@
       track(card, { opacity: 0 }, [
         [t, { opacity: 1 }, FADE_IN],
         [t + RECOGNIZED + 0.02, { opacity: 0.5 }, DIM],
-        [t + LEAVE, { opacity: 1 }, FADE_OUT],
+        [t + LEAVE, { opacity: 1 }, BRIGHTEN],
         [t + GONE, { opacity: 0 }, SNAP],
       ]);
     });
@@ -146,45 +140,23 @@
     demo.querySelectorAll('[data-edge]').forEach((edge) => {
       const at = STARTS[+edge.dataset.edge] + RECOGNIZED;
       track(edge, { opacity: 0 }, [
-        [at, { opacity: 0.9 }, curve(STRONG_OUT, 0.1)],
-        [at + 0.1, { opacity: 0.76 }, curve('linear', 0.08)],
-        [at + 0.18, { opacity: 0 }, curve('cubic-bezier(.33, 0, .67, 1)', 0.65)],
+        [at, { opacity: 0.62 }, curve(STRONG_OUT, 0.16)],
+        [at + 0.16, { opacity: 0 }, curve('cubic-bezier(.33, 0, .67, 1)', 0.9)],
       ]);
     });
   };
 
-  const scoreScanner = () => {
-    const LOOSE = { transform: 'scale(1.05)', opacity: 0 };
-    const READING = { transform: 'scale(1.012)', opacity: 0.9 };
-    track(part('[data-box]'), LOOSE, onEveryCard([
-      [BOX, READING, BOX_IN],
-      [RECOGNIZED, { transform: 'scale(1)', opacity: 0 }, curve('linear', 0.04)],
-      [LEAVE, LOOSE, SNAP],
-    ]));
-
-    const UNLOCKED = { transform: 'scale(1.012)', opacity: 0 };
-    track(part('[data-lock]'), UNLOCKED, onEveryCard([
-      [RECOGNIZED, { transform: 'scale(1)', opacity: 1 }, LOCK],
-      [RECOGNIZED + 0.42, { transform: 'scale(1)', opacity: 0 }, curve(STRONG_OUT, 0.3)],
-      [LEAVE, UNLOCKED, SNAP],
-    ]));
-
+  const scoreLight = () => {
     const beam = part('[data-beam]');
     const ABOVE = { transform: 'translateY(-100%)' };
-    const BELOW = { transform: 'translateY(285%)' };
+    const BELOW = { transform: 'translateY(240%)' };
     track(beam, ABOVE, onEveryCard([
       [READ, BELOW, READ_RUN],
       [LEAVE, ABOVE, SNAP],
     ]));
     track(beam, { opacity: 0 }, onEveryCard([
-      [READ, { opacity: 1 }, curve('linear', 0.05)],
-      [RECOGNIZED - 0.05, { opacity: 0 }, curve('linear', 0.05)],
-    ]));
-
-    const OFF_LEFT = { transform: 'translateX(-120%)' };
-    track(part('[data-sheen]'), OFF_LEFT, onEveryCard([
-      [RECOGNIZED, { transform: 'translateX(120%)' }, SHEEN_RUN],
-      [LEAVE, OFF_LEFT, SNAP],
+      [READ, { opacity: 1 }, curve('linear', 0.12)],
+      [RECOGNIZED - 0.12, { opacity: 0 }, curve('linear', 0.12)],
     ]));
   };
 
@@ -193,10 +165,10 @@
     const AWAY = { transform: 'translateY(-8%) scale(1)', opacity: 0 };
     results.forEach((result, i) => {
       const t = STARTS[i];
-      const [name, price, flight] = result.children;
+      const [name, price] = result.children;
       for (const [el, at, enter] of [
-        [name, NAME, 'translateY(60%) scale(.92)'],
-        [price, PRICE, 'translateY(36%) scale(.78)'],
+        [name, NAME, 'translateY(40%) scale(.97)'],
+        [price, PRICE, 'translateY(20%) scale(.88)'],
       ]) {
         const HIDDEN = { transform: enter, opacity: 0 };
         track(el, HIDDEN, [
@@ -205,16 +177,6 @@
           [t + LEAVE + 0.2, HIDDEN, SNAP],
         ]);
       }
-      // The value travels to the total: 296 points up, shrinking to the total's size.
-      const HOME = { transform: 'translateY(0) scale(1)' };
-      track(flight, HOME, [
-        [t + FLIGHT, { transform: 'translateY(-356%) scale(.375)' }, FLIGHT_PATH],
-        [t + LEAVE, HOME, SNAP],
-      ]);
-      track(flight, { opacity: 0 }, [
-        [t + FLIGHT, { opacity: 0.95 }, SNAP],
-        [t + FLIGHT + 0.14, { opacity: 0 }, curve(STRONG_OUT, 0.14)],
-      ]);
     });
   };
 
@@ -243,7 +205,7 @@
       const cell = document.createElement('span');
       cell.className = 'demo__cell';
       row.append(cell);
-      const lag = (5 - slot - (slot < 3 ? 1 : 0)) * 0.024;
+      const lag = (5 - slot - (slot < 3 ? 1 : 0)) * 0.03;
 
       // Each run of one glyph across consecutive totals is one element.
       let k = 0;
@@ -279,23 +241,13 @@
     const reCenter = (el, n) =>
       track(el, shift(n), [
         [CHANGES[1], shift(0), POP],
-        [CHANGES[0], shift(n), LIFT_AWAY],
+        [CHANGES[0], shift(n), SETTLE],
       ]);
     sign.style.display = 'inline-block';
     reCenter(sign, 2);
     reCenter(row, -1);
     total.append(row);
 
-    // The total catches the value: a small lift and a soft light, then it settles.
-    const STILL = { transform: 'scale(1)' };
-    track(total, STILL, onEveryCard([
-      [TOTAL, { transform: 'scale(1.08)' }, curve(STRONG_OUT, 0.1)],
-      [TOTAL + 0.1, STILL, LIFT_AWAY],
-    ]));
-    track(part('[data-halo]'), { opacity: 0 }, onEveryCard([
-      [TOTAL, { opacity: 1 }, curve(STRONG_OUT, 0.1)],
-      [TOTAL + 0.16, { opacity: 0 }, curve('cubic-bezier(.33, 0, .67, 1)', 0.55)],
-    ]));
   };
 
   let saved = SETTLED * 1000;
@@ -326,7 +278,7 @@
   const start = () => {
     if (animations.length) return;
     scoreCards();
-    scoreScanner();
+    scoreLight();
     scoreResults();
     scoreTotal();
     demo.classList.add('is-live');
