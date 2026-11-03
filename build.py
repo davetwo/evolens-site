@@ -11,8 +11,19 @@ ROOT = Path(__file__).resolve().parent
 # The App Store page, once evolens is live there: https://apps.apple.com/app/id6827268329 (a 404 on 2026-11-02).
 # Empty: every badge links nowhere.
 APP_STORE_URL = ""
+# Apple's provider token (pt=), shown in App Store Connect › Analytics › Acquisition › Campaigns once a campaign link is
+# made there. With it, badges are campaign links: campaign "web", or "web-<source>" for a visitor who arrived from a
+# short link below (Apple reports downloads per campaign). Empty: plain App Store links.
+APP_STORE_PT = ""
 # evolens' profiles. A name with no address is shown as plain text, never as a dead link.
 SOCIAL = {"Instagram": "", "TikTok": "", "YouTube": ""}
+# Short links for profiles: evolens.app/<source>/ opens the home page tagged utm_source=<source>, utm_medium=social,
+# utm_campaign=bio. Only these sources become App Store campaigns, so stray tags can't make new ones.
+CAMPAIGN_SOURCES = ("tiktok", "instagram", "youtube")
+
+# Website analytics: Umami Cloud's free Hobby plan (no cookies; 100K events a month, 6 months kept). Empty: none.
+# Pageviews, plus one event, app_store_click with its placement (2 events). /no-track/ stops counting a browser.
+UMAMI_WEBSITE_ID = "ea72774c-73b4-46a5-b9c8-33fcbb3296d9"
 
 PAGES = {"privacy": ("Privacy Policy · evolens", "/privacy/", "What the evolens app keeps on your iPhone, what it sends, and to whom."),
          "support": ("Support · evolens", "/support/", "Get help with evolens: subscriptions, scanning, and your data."),
@@ -33,10 +44,12 @@ DEMO_CARDS = [
 BADGE_IMG = '<img src="/assets/home/app-store-badge.svg" width="144" height="48" alt="{alt}">'
 
 
-def badge():
-    """Apple's badge. Before launch it links nowhere."""
+def badge(placement):
+    """Apple's badge. Before launch it links nowhere. placement (nav, hero or footer) is reported with each tap."""
     if APP_STORE_URL:
-        return f'<a class="badge" href="{APP_STORE_URL}">{BADGE_IMG.format(alt="Download on the App Store")}</a>'
+        href = f"{APP_STORE_URL}?pt={APP_STORE_PT}&amp;ct=web&amp;mt=8" if APP_STORE_PT else APP_STORE_URL
+        return (f'<a class="badge" href="{href}" data-placement="{placement}">'
+                f'{BADGE_IMG.format(alt="Download on the App Store")}</a>')
     return f'<span class="badge">{BADGE_IMG.format(alt="Coming soon to the App Store")}</span>'
 
 
@@ -54,7 +67,7 @@ def footer():
     <div class="foot__lead">
       <a class="foot__brand" href="/"><img src="/assets/home/mark-white.svg" width="48" height="48" alt=""><span translate="no">evolens</span></a>
       <p class="foot__tagline">Made for the cards you love.</p>
-      {badge()}
+      {badge("footer")}
     </div>
     <div class="foot__links">
       <ul aria-label="Follow us"><li class="foot__head">Follow Us</li>{social}</ul>
@@ -88,8 +101,27 @@ def demo_parts():
             "{{TILE_TOTAL}}": money(sum(c[1] for c in DEMO_CARDS))}
 
 
-def page(title, path, head, body, description=""):
+def analytics():
+    """The tracker, counting only on evolens.app, and once the App Store is linked, the badges' taps and campaign."""
+    if not UMAMI_WEBSITE_ID:
+        return "", ""
+    head = (f'<script defer src="https://cloud.umami.is/script.js" data-website-id="{UMAMI_WEBSITE_ID}" '
+            'data-domains="evolens.app" data-do-not-track="true"></script>\n')
+    if not APP_STORE_URL:
+        return head, ""
+    campaign = (f"const source = new URLSearchParams(location.search).get('utm_source')?.toLowerCase(), "
+                f"ct = {list(CAMPAIGN_SOURCES)}.includes(source) && `web-${{source}}`;" if APP_STORE_PT else "const ct = false;")
+    return head, f"""<script>{{ {campaign}
+for (const a of document.querySelectorAll('a.badge')) {{
+  if (ct) {{ const url = new URL(a.href); url.searchParams.set('ct', ct); a.href = url; }}
+  a.addEventListener('click', () => window.umami?.track('app_store_click', {{ placement: a.dataset.placement }}));
+}} }}</script>
+"""
+
+
+def page(title, path, head, body, description="", counted=True):
     meta = f'<meta name="description" content="{description}">\n' if description else ""
+    tracker, taps = analytics() if counted else ("", "")
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -101,11 +133,11 @@ def page(title, path, head, body, description=""):
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/assets/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/base.css">
-{head}
+{tracker}{head}
 </head>
 <body>
 {body}
-<script>new IntersectionObserver(([e]) => {{ document.documentElement.classList.toggle('at-foot', e.isIntersecting); document.querySelector('meta[name=theme-color]').content = e.isIntersecting ? '#191919' : '#ffffff'; }}).observe(document.querySelector('.foot'))</script>
+{taps}<script>new IntersectionObserver(([e]) => {{ document.documentElement.classList.toggle('at-foot', e.isIntersecting); document.querySelector('meta[name=theme-color]').content = e.isIntersecting ? '#191919' : '#ffffff'; }}).observe(document.querySelector('.foot'))</script>
 </body>
 </html>
 """
@@ -115,7 +147,7 @@ email = sys.argv[1] if len(sys.argv) > 1 else ""
 if "@" not in email:
     sys.exit("usage: python3 -I build.py <contact email>")
 
-home = (ROOT / "_src" / "home.html").read_text().replace("{{BADGE}}", badge())
+home = (ROOT / "_src" / "home.html").read_text().replace("{{BADGE}}", badge("hero"))
 for marker, html in demo_parts().items():
     home = home.replace(marker, html)
 (ROOT / "index.html").write_text(page(
@@ -123,7 +155,7 @@ for marker, html in demo_parts().items():
     """<link rel="preload" href="/assets/geist.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/home.css">
 <script src="/assets/hero.js" defer></script>""",
-    f"{nav(badge())}\n{home}{footer()}",
+    f"{nav(badge('nav'))}\n{home}{footer()}",
     "evolens recognizes your Pokémon cards with your iPhone’s camera, keeps your collection organized, and shows what it’s worth."))
 print("index.html")
 
@@ -133,6 +165,54 @@ for name, (title, path, description) in PAGES.items():
     out.parent.mkdir(exist_ok=True)
     out.write_text(page(title, path, '<link rel="stylesheet" href="/assets/site.css">',
                         f'{nav("""<a class="nav__home" href="/">← Home</a>""")}\n<main class="doc">\n{body}</main>\n{footer()}', description))
+    print(out.relative_to(ROOT))
+
+# Turns website analytics off (or back on) in this browser: Umami skips any browser with umami.disabled stored.
+out = ROOT / "no-track/index.html"
+out.parent.mkdir(exist_ok=True)
+out.write_text(page("Analytics · evolens", "/no-track/", """<link rel="stylesheet" href="/assets/site.css">
+<meta name="robots" content="noindex">""", f"""{nav('<a class="nav__home" href="/">← Home</a>')}
+<main class="doc">
+<h1>Website analytics</h1>
+<p data-state></p>
+<p>Other browsers, including the ones built into apps like TikTok and Instagram, keep their own setting.</p>
+<p><button type="button" data-switch></button></p>
+</main>
+{footer()}
+<script>{{
+const state = document.querySelector('[data-state]'), button = document.querySelector('[data-switch]');
+const show = () => {{
+  const off = localStorage.getItem('umami.disabled');
+  state.textContent = off ? 'Visits from this browser aren’t counted.' : 'Visits from this browser are counted.';
+  button.textContent = off ? 'Count this browser again' : 'Stop counting this browser';
+}};
+button.onclick = () => {{
+  localStorage.getItem('umami.disabled') ? localStorage.removeItem('umami.disabled') : localStorage.setItem('umami.disabled', 1);
+  show();
+}};
+localStorage.setItem('umami.disabled', 1);
+show();
+}}</script>""", counted=False))
+print(out.relative_to(ROOT))
+
+# Profile short links: no tracker here, so the tagged home page is the one visit counted.
+for source in CAMPAIGN_SOURCES:
+    target = f"/?utm_source={source}&amp;utm_medium=social&amp;utm_campaign=bio"
+    out = ROOT / f"{source}/index.html"
+    out.parent.mkdir(exist_ok=True)
+    out.write_text(f"""<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>evolens</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://evolens.app/">
+<meta http-equiv="refresh" content="0; url={target}">
+<script>location.replace('{target.replace("&amp;", "&")}')</script>
+</head>
+<body><a href="{target}">evolens</a></body>
+</html>
+""")
     print(out.relative_to(ROOT))
 
 # The footer calls Support "Contact", so that address should work too.

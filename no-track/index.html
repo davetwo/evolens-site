@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<title>Analytics · evolens</title>
+<link rel="canonical" href="https://evolens.app/no-track/">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/assets/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/base.css">
+<link rel="stylesheet" href="/assets/site.css">
+<meta name="robots" content="noindex">
+</head>
+<body>
+<header class="nav"><a class="brand" href="/"><img class="brand__mark" src="/assets/home/mark-black.svg" width="26" height="26" alt=""><span class="brand__word" translate="no">evolens</span></a><a class="nav__home" href="/">← Home</a></header>
+<main class="doc">
+<h1>Website analytics</h1>
+<p data-state></p>
+<p>Other browsers, including the ones built into apps like TikTok and Instagram, keep their own setting.</p>
+<p><button type="button" data-switch></button></p>
+</main>
+<footer class="foot">
+  <hr class="foot__rule">
+  <div class="foot__row">
+    <div class="foot__lead">
+      <a class="foot__brand" href="/"><img src="/assets/home/mark-white.svg" width="48" height="48" alt=""><span translate="no">evolens</span></a>
+      <p class="foot__tagline">Made for the cards you love.</p>
+      <span class="badge"><img src="/assets/home/app-store-badge.svg" width="144" height="48" alt="Coming soon to the App Store"></span>
+    </div>
+    <div class="foot__links">
+      <ul aria-label="Follow us"><li class="foot__head">Follow Us</li><li>Instagram</li><li>TikTok</li><li>YouTube</li></ul>
+      <ul aria-label="Info"><li class="foot__head foot__head--info">Info</li><li><a href="/terms/">Terms</a></li><li><a href="/privacy/">Privacy</a></li><li><a href="/support/">Contact</a></li></ul>
+    </div>
+  </div>
+  <p class="foot__legal">© 2026 evolens</p>
+</footer>
+<script>{
+const state = document.querySelector('[data-state]'), button = document.querySelector('[data-switch]');
+const show = () => {
+  const off = localStorage.getItem('umami.disabled');
+  state.textContent = off ? 'Visits from this browser aren’t counted.' : 'Visits from this browser are counted.';
+  button.textContent = off ? 'Count this browser again' : 'Stop counting this browser';
+};
+button.onclick = () => {
+  localStorage.getItem('umami.disabled') ? localStorage.removeItem('umami.disabled') : localStorage.setItem('umami.disabled', 1);
+  show();
+};
+localStorage.setItem('umami.disabled', 1);
+show();
+}</script>
+<script>new IntersectionObserver(([e]) => { document.documentElement.classList.toggle('at-foot', e.isIntersecting); document.querySelector('meta[name=theme-color]').content = e.isIntersecting ? '#191919' : '#ffffff'; }).observe(document.querySelector('.foot'))</script>
+</body>
+</html>
