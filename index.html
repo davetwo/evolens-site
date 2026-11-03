@@ -23,29 +23,41 @@
     <div class="hero__badge"><span class="badge" title="Coming soon"><img src="/assets/home/app-store-badge.svg" width="144" height="48" alt="Coming soon to the App Store"><span class="badge__note" aria-hidden="true">Coming soon</span></span></div>
 
     <figure class="demo" data-demo role="img" aria-label="Demonstration: evolens recognizes a card held up to the iPhone’s camera, shows its name and value, and adds it to the session total. Cards and prices are examples.">
-      <div class="demo__screen">
-        <div class="demo__tint"></div>
-      </div>
+      <div class="demo__screen"><div class="demo__tint" data-tint="1" style="background:linear-gradient(#551b50,#371539)"></div><div class="demo__tint" data-tint="2" style="background:linear-gradient(#403419,#392e15)"></div><div class="demo__tint" data-tint="3" style="background:linear-gradient(#4a1826,#2f111c)"></div><div class="demo__tint" data-tint="4" style="background:linear-gradient(#123f44,#0e2e33)"></div></div>
       <img class="demo__frame" src="/assets/home/phone.webp" alt="" width="980" height="2000" fetchpriority="high">
 
       <div class="demo__view">
-        <div class="demo__card" data-card>
-          <img src="/assets/home/cards/mega-darkrai-ex.webp" alt="" width="660" height="922" fetchpriority="high">
+        <div class="demo__stack" data-stack>
+          <div class="demo__card" data-card><img src="/assets/home/cards/mega-darkrai-ex.webp" alt="" width="660" height="922" fetchpriority="high"></div>
+          <div class="demo__card demo__card--later" data-card><img src="/assets/home/cards/fezandipiti-ex.webp" alt="" width="660" height="922" fetchpriority="low"></div>
+          <div class="demo__card demo__card--later" data-card><img src="/assets/home/cards/mew-ex.webp" alt="" width="660" height="922" fetchpriority="low"></div>
+          <div class="demo__card demo__card--later" data-card><img src="/assets/home/cards/team-rockets-mewtwo-ex.webp" alt="" width="660" height="922" fetchpriority="low"></div>
+          <div class="demo__card demo__card--later" data-card><img src="/assets/home/cards/gardevoir-ex.webp" alt="" width="660" height="922" fetchpriority="low"></div>
+          <div class="demo__card demo__card--later" data-card><img src="/assets/home/cards/cresselia.webp" alt="" width="660" height="922" fetchpriority="low"></div>
+          <div class="demo__rig">
+            <div class="demo__glass"><span class="demo__beam" data-beam></span><span class="demo__sheen" data-sheen></span></div>
+            <span class="demo__box" data-box></span>
+            <span class="demo__box demo__box--lock" data-lock></span>
+          </div>
         </div>
-        <div class="demo__card demo__card--later" data-card>
-          <img src="/assets/home/cards/fezandipiti-ex.webp" alt="" width="660" height="922" fetchpriority="low">
-        </div>
-        <div class="demo__card demo__card--later demo__card--glow" data-card>
-          <img src="/assets/home/cards/cresselia.webp" alt="" width="660" height="922" fetchpriority="low">
-        </div>
+        <div class="demo__edge" data-edge="0" style="--light:#d6e77a"></div>
+        <div class="demo__edge" data-edge="1" style="--light:#f58fcb"></div>
+        <div class="demo__edge" data-edge="2" style="--light:#f0cf85"></div>
+        <div class="demo__edge" data-edge="3" style="--light:#e0708a"></div>
+        <div class="demo__edge" data-edge="4" style="--light:#7fe0dc"></div>
+        <div class="demo__edge" data-edge="5" style="--light:#a9d3ec"></div>
       </div>
 
       <div class="demo__overlay">
         <p class="demo__label">Session Value</p>
+        <span class="demo__halo" data-halo></span>
         <p class="demo__total" data-total><span class="demo__total-start">$0.00</span><span class="demo__total-reduced">$323.13</span></p>
-        <div class="demo__result" data-result><p>Mega Darkrai ex</p><p>$323.13</p></div>
-        <div class="demo__result" data-result><p>Fezandipiti ex</p><p>$4.32</p></div>
-        <div class="demo__result" data-result><p>Cresselia</p><p>$24.64</p></div>
+        <div class="demo__result" data-result data-cents="32313"><p class="demo__name">Mega Darkrai ex</p><p class="demo__price">$323.13</p><p class="demo__price demo__price--flight">$323.13</p></div>
+        <div class="demo__result" data-result data-cents="432"><p class="demo__name">Fezandipiti ex</p><p class="demo__price">$4.32</p><p class="demo__price demo__price--flight">$4.32</p></div>
+        <div class="demo__result" data-result data-cents="8565"><p class="demo__name">Mew ex</p><p class="demo__price">$85.65</p><p class="demo__price demo__price--flight">$85.65</p></div>
+        <div class="demo__result" data-result data-cents="35528"><p class="demo__name">Team Rocket’s Mewtwo ex</p><p class="demo__price">$355.28</p><p class="demo__price demo__price--flight">$355.28</p></div>
+        <div class="demo__result" data-result data-cents="16704"><p class="demo__name">Gardevoir ex</p><p class="demo__price">$167.04</p><p class="demo__price demo__price--flight">$167.04</p></div>
+        <div class="demo__result" data-result data-cents="2464"><p class="demo__name">Cresselia</p><p class="demo__price">$24.64</p><p class="demo__price demo__price--flight">$24.64</p></div>
       </div>
     </figure>
     <button class="demo-toggle" type="button" data-toggle>Pause demo</button>
@@ -112,5 +124,6 @@
   </div>
   <p class="foot__legal">© 2026 evolens</p>
 </footer>
+<script>new IntersectionObserver(([e]) => document.documentElement.classList.toggle('at-foot', e.isIntersecting)).observe(document.querySelector('.foot'))</script>
 </body>
 </html>

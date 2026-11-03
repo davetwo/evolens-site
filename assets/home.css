@@ -56,11 +56,10 @@
 .demo__screen,
 .mini__screen { background: url('/assets/home/screen.webp') center / 100% 100%; }
 
-/* Fezandipiti's screen color. Darkrai and Cresselia use the neutral screen beneath. */
+/* A card's screen color, from its art. Cards without one use the neutral screen beneath. */
 .demo__tint {
   position: absolute;
   inset: 0;
-  background: linear-gradient(#551b50, #371539);
   opacity: 0;
 }
 
@@ -74,28 +73,84 @@
   pointer-events: none;
 }
 
+/* The stack is scaled as one by a recognition's knock, around the card's center. */
+.demo__stack {
+  position: absolute;
+  inset: 0;
+  transform-origin: calc(var(--u) * 224.5) calc(var(--u) * 388);
+}
+
 /* Cards are 329 × 460 at (81, 169) on the phone. They travel inside the screen, clipped to it. */
-.demo__card {
+.demo__card,
+.demo__rig {
   position: absolute;
   left: calc(var(--u) * 60);
   top: calc(var(--u) * 158);
   width: calc(var(--u) * 329);
   height: calc(var(--u) * 460);
   border-radius: calc(var(--u) * 16);
-  box-shadow: 0 0 calc(var(--u) * 22.2) rgb(0 0 0 / .4);
 }
+
+.demo__card { box-shadow: 0 0 calc(var(--u) * 22.2) rgb(0 0 0 / .4); }
 
 .demo__card--later { opacity: 0; }
-
-.demo__card--glow {
-  box-shadow: 0 0 calc(var(--u) * 22.2) rgb(0 0 0 / .53), 0 0 calc(var(--u) * 162.3) rgb(141 192 223 / .36);
-}
 
 .demo__card img {
   display: block;
   width: 100%;
   height: 100%;
   border-radius: inherit;
+}
+
+/* The scanner: a light that reads down the card and a sheen on recognition (inside the card), and the app's scan box. */
+.demo__glass {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+}
+
+.demo__beam {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 26%;
+  background: linear-gradient(transparent, rgb(255 255 255 / .1) 55%, rgb(255 255 255 / .42) 96%, rgb(255 255 255 / .9));
+  opacity: 0;
+}
+
+.demo__sheen {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 28%, rgb(255 255 255 / .62) 50%, transparent 72%);
+  transform: translateX(-120%);
+}
+
+.demo__box {
+  position: absolute;
+  inset: calc(var(--u) * -7);
+  border: max(1.5px, var(--u) * 1.5) solid #fff;
+  border-radius: calc(var(--u) * 21);
+  box-shadow: 0 0 calc(var(--u) * 12.5) rgb(0 0 0 / .36);
+  opacity: 0;
+}
+
+.demo__box--lock {
+  border-width: max(2px, var(--u) * 2.25);
+  box-shadow: 0 0 calc(var(--u) * 16) rgb(255 255 255 / .6);
+}
+
+/* The light around the screen's edge on a recognition, in the card's color: the app's soft glow and fine line. */
+.demo__edge {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow:
+    inset 0 0 calc(var(--u) * 34) calc(var(--u) * 2) var(--light),
+    inset 0 0 calc(var(--u) * 3) calc(var(--u) * 1) var(--light);
+  opacity: 0;
+  pointer-events: none;
 }
 
 .demo__overlay {
@@ -130,6 +185,18 @@
 
 .demo__total-reduced { display: none; }
 
+/* The total catches light as a value lands in it. */
+.demo__halo {
+  position: absolute;
+  left: 50%;
+  top: calc(var(--u) * 126);
+  width: calc(var(--u) * 180);
+  height: calc(var(--u) * 90);
+  margin: calc(var(--u) * -45) 0 0 calc(var(--u) * -90);
+  background: radial-gradient(closest-side, rgb(255 255 255 / .2), transparent);
+  opacity: 0;
+}
+
 .demo.is-live .demo__total-start { display: none; }
 
 .demo__row {
@@ -163,18 +230,23 @@
   white-space: nowrap;
 }
 
-.demo__result p { opacity: 0; letter-spacing: -.06em; }
+.demo__name,
+.demo__price { opacity: 0; letter-spacing: -.06em; }
 
-.demo__result p:first-child {
+.demo__name {
   font-weight: 500;
   font-size: calc(var(--u) * 20);
   color: rgb(255 255 255 / .8);
 }
 
-.demo__result p:last-child {
+.demo__price {
+  position: relative;
   font-weight: 600;
   font-size: calc(var(--u) * 64);
 }
+
+/* The value that travels up into the session total. */
+.demo__price--flight { position: absolute; left: 0; right: 0; top: calc(var(--u) * 26); }
 
 /* Appears on keyboard focus, and whenever the demo is paused (clicking the phone pauses it too). */
 .demo-toggle {
@@ -199,8 +271,8 @@
 
 /* Reduced motion, with or without the script: one finished recognition, held. */
 @media (prefers-reduced-motion: reduce) {
-  .demo__card:first-child img { opacity: .5; }
-  .demo__result:first-of-type p { opacity: 1; }
+  .demo__card:first-child { opacity: .5; }
+  .demo__result:first-of-type :is(.demo__name, .demo__price:not(.demo__price--flight)) { opacity: 1; }
   .demo__total-start { display: none; }
   .demo__total-reduced { display: inline; }
   .demo-toggle { display: none; }

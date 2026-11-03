@@ -18,6 +18,19 @@ PAGES = {"privacy": ("Privacy Policy · evolens", "/privacy/", "What the evolens
          "support": ("Support · evolens", "/support/", "Get help with evolens: subscriptions, scanning, and your data."),
          "terms": ("Terms of Use · evolens", "/terms/", "The terms that apply to the evolens iPhone app and evolens Pro.")}
 
+# The hero's scripted scans, in order: name, value in cents, art, edge light, screen color (top, bottom; None: neutral).
+# Darkrai, Fezandipiti, Cresselia and their colors are Figma's. Mew ex (30C 152/128), Team Rocket's Mewtwo ex (DRI 231/182)
+# and Gardevoir ex (PAF 233/091) are Near Mint holofoil, TCGplayer market via JustTCG, as evolens' pricing observed them on
+# 2026-10-16 (pricing/build/live/raw). These are examples, not live prices.
+DEMO_CARDS = [
+    ("Mega Darkrai ex", 32313, "mega-darkrai-ex", "#d6e77a", None),
+    ("Fezandipiti ex", 432, "fezandipiti-ex", "#f58fcb", ("#551b50", "#371539")),
+    ("Mew ex", 8565, "mew-ex", "#f0cf85", ("#403419", "#392e15")),
+    ("Team Rocket’s Mewtwo ex", 35528, "team-rockets-mewtwo-ex", "#e0708a", ("#4a1826", "#2f111c")),
+    ("Gardevoir ex", 16704, "gardevoir-ex", "#7fe0dc", ("#123f44", "#0e2e33")),
+    ("Cresselia", 2464, "cresselia", "#a9d3ec", None),
+]
+
 BADGE_IMG = '<img src="/assets/home/app-store-badge.svg" width="144" height="48" alt="{alt}">'
 
 
@@ -54,6 +67,27 @@ def footer():
 </footer>"""
 
 
+def money(cents):
+    return f"${cents / 100:.2f}"
+
+
+def demo_parts():
+    """The hero's per-card pieces. hero.js reads their order and values from here."""
+    tints, cards, edges, results = [], [], [], []
+    for i, (name, cents, art, light, tint) in enumerate(DEMO_CARDS):
+        if tint:
+            tints.append(f'<div class="demo__tint" data-tint="{i}" style="background:linear-gradient({tint[0]},{tint[1]})"></div>')
+        later = " demo__card--later" if i else ""
+        priority = "high" if i == 0 else "low"
+        cards.append(f'          <div class="demo__card{later}" data-card><img src="/assets/home/cards/{art}.webp" alt="" '
+                     f'width="660" height="922" fetchpriority="{priority}"></div>')
+        edges.append(f'        <div class="demo__edge" data-edge="{i}" style="--light:{light}"></div>')
+        results.append(f'        <div class="demo__result" data-result data-cents="{cents}"><p class="demo__name">{name}</p>'
+                       f'<p class="demo__price">{money(cents)}</p><p class="demo__price demo__price--flight">{money(cents)}</p></div>')
+    return {"{{DEMO_TINTS}}": "".join(tints), "{{DEMO_CARDS}}": "\n".join(cards), "{{DEMO_EDGES}}": "\n".join(edges),
+            "{{DEMO_RESULTS}}": "\n".join(results), "{{DEMO_FIRST_VALUE}}": money(DEMO_CARDS[0][1])}
+
+
 def page(title, path, head, body, description=""):
     meta = f'<meta name="description" content="{description}">\n' if description else ""
     return f"""<!doctype html>
@@ -71,6 +105,7 @@ def page(title, path, head, body, description=""):
 </head>
 <body>
 {body}
+<script>new IntersectionObserver(([e]) => document.documentElement.classList.toggle('at-foot', e.isIntersecting)).observe(document.querySelector('.foot'))</script>
 </body>
 </html>
 """
@@ -81,6 +116,8 @@ if "@" not in email:
     sys.exit("usage: python3 -I build.py <contact email>")
 
 home = (ROOT / "_src" / "home.html").read_text().replace("{{BADGE_NOTED}}", badge(note=True))
+for marker, html in demo_parts().items():
+    home = home.replace(marker, html)
 (ROOT / "index.html").write_text(page(
     "evolens: scan, track, and value your Pokémon cards", "/",
     """<link rel="preload" href="/assets/geist.woff2" as="font" type="font/woff2" crossorigin>
