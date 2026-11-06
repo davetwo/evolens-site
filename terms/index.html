@@ -78,7 +78,7 @@
     <div class="foot__lead">
       <a class="foot__brand" href="/"><img src="/assets/home/mark-white.svg" width="48" height="48" alt=""><span translate="no">evolens</span></a>
       <p class="foot__tagline">Made for the cards you love.</p>
-      <span class="badge"><img src="/assets/home/app-store-badge.svg" width="144" height="48" alt="Coming soon to the App Store"></span>
+      <a class="badge" href="https://apps.apple.com/us/app/evolens-tcg-card-scanner/id6827268329" data-placement="footer"><img src="/assets/home/app-store-badge.svg" width="144" height="48" alt="Download on the App Store"></a>
     </div>
     <div class="foot__links">
       <ul aria-label="Follow us"><li class="foot__head">Follow Us</li><li>Instagram</li><li>TikTok</li><li>YouTube</li></ul>
@@ -87,6 +87,11 @@
   </div>
   <p class="foot__legal">© 2026 evolens</p>
 </footer>
+<script>{ const ct = false;
+for (const a of document.querySelectorAll('a.badge')) {
+  if (ct) { const url = new URL(a.href); url.searchParams.set('ct', ct); a.href = url; }
+  a.addEventListener('click', () => window.umami?.track('app_store_click', { placement: a.dataset.placement }));
+} }</script>
 <script>new IntersectionObserver(([e]) => { document.documentElement.classList.toggle('at-foot', e.isIntersecting); document.querySelector('meta[name=theme-color]').content = e.isIntersecting ? '#191919' : '#ffffff'; }).observe(document.querySelector('.foot'))</script>
 </body>
 </html>

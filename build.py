@@ -8,9 +8,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 
-# The App Store page, once evolens is live there: https://apps.apple.com/app/id6827268329 (a 404 on 2026-11-02).
-# Empty: every badge links nowhere.
-APP_STORE_URL = ""
+# evolens' App Store page. Empty: every badge links nowhere.
+APP_STORE_URL = "https://apps.apple.com/us/app/evolens-tcg-card-scanner/id6827268329"
 # Apple's provider token (pt=), shown in App Store Connect › Analytics › Acquisition › Campaigns once a campaign link is
 # made there. With it, badges are campaign links: campaign "web", or "web-<source>" for a visitor who arrived from a
 # short link below (Apple reports downloads per campaign). Empty: plain App Store links.

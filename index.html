@@ -16,12 +16,12 @@
 <script src="/assets/hero.js" defer></script>
 </head>
 <body>
-<header class="nav"><a class="brand" href="/"><img class="brand__mark" src="/assets/home/mark-black.svg" width="26" height="26" alt=""><span class="brand__word" translate="no">evolens</span></a><span class="badge"><img src="/assets/home/app-store-badge.svg" width="144" height="48" alt="Coming soon to the App Store"></span></header>
+<header class="nav"><a class="brand" href="/"><img class="brand__mark" src="/assets/home/mark-black.svg" width="26" height="26" alt=""><span class="brand__word" translate="no">evolens</span></a><a class="badge" href="https://apps.apple.com/us/app/evolens-tcg-card-scanner/id6827268329" data-placement="nav"><img src="/assets/home/app-store-badge.svg" width="144" height="48" alt="Download on the App Store"></a></header>
 <main>
   <section class="hero">
     <h1 class="hero__title">Scan, track,&nbsp;<br>and value your<br>Pokémon cards</h1>
     <p class="hero__sub">Bring your entire collection into focus.</p>
-    <div class="hero__badge"><span class="badge"><img src="/assets/home/app-store-badge.svg" width="144" height="48" alt="Coming soon to the App Store"></span></div>
+    <div class="hero__badge"><a class="badge" href="https://apps.apple.com/us/app/evolens-tcg-card-scanner/id6827268329" data-placement="hero"><img src="/assets/home/app-store-badge.svg" width="144" height="48" alt="Download on the App Store"></a></div>
 
     <figure class="demo" data-demo role="img" aria-label="Demonstration: evolens recognizes a card held up to the iPhone’s camera, shows its name and value, and adds it to the session total. Cards and prices are examples.">
       <div class="demo__screen"><div class="demo__tint" data-tint="1" style="background:linear-gradient(#551b50,#371539)"></div><div class="demo__tint" data-tint="2" style="background:linear-gradient(#403419,#392e15)"></div><div class="demo__tint" data-tint="3" style="background:linear-gradient(#4a1826,#2f111c)"></div><div class="demo__tint" data-tint="4" style="background:linear-gradient(#123f44,#0e2e33)"></div><div class="demo__edge" data-edge="0" style="--light:#c6cf9f"></div><div class="demo__edge" data-edge="1" style="--light:#d9a6c8"></div><div class="demo__edge" data-edge="2" style="--light:#cfc4a6"></div><div class="demo__edge" data-edge="3" style="--light:#d39aa8"></div><div class="demo__edge" data-edge="4" style="--light:#a3d4d2"></div><div class="demo__edge" data-edge="5" style="--light:#b4d0e2"></div></div>
@@ -107,7 +107,7 @@
     <div class="foot__lead">
       <a class="foot__brand" href="/"><img src="/assets/home/mark-white.svg" width="48" height="48" alt=""><span translate="no">evolens</span></a>
       <p class="foot__tagline">Made for the cards you love.</p>
-      <span class="badge"><img src="/assets/home/app-store-badge.svg" width="144" height="48" alt="Coming soon to the App Store"></span>
+      <a class="badge" href="https://apps.apple.com/us/app/evolens-tcg-card-scanner/id6827268329" data-placement="footer"><img src="/assets/home/app-store-badge.svg" width="144" height="48" alt="Download on the App Store"></a>
     </div>
     <div class="foot__links">
       <ul aria-label="Follow us"><li class="foot__head">Follow Us</li><li>Instagram</li><li>TikTok</li><li>YouTube</li></ul>
@@ -116,6 +116,11 @@
   </div>
   <p class="foot__legal">© 2026 evolens</p>
 </footer>
+<script>{ const ct = false;
+for (const a of document.querySelectorAll('a.badge')) {
+  if (ct) { const url = new URL(a.href); url.searchParams.set('ct', ct); a.href = url; }
+  a.addEventListener('click', () => window.umami?.track('app_store_click', { placement: a.dataset.placement }));
+} }</script>
 <script>new IntersectionObserver(([e]) => { document.documentElement.classList.toggle('at-foot', e.isIntersecting); document.querySelector('meta[name=theme-color]').content = e.isIntersecting ? '#191919' : '#ffffff'; }).observe(document.querySelector('.foot'))</script>
 </body>
 </html>
