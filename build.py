@@ -15,7 +15,9 @@ APP_STORE_URL = "https://apps.apple.com/us/app/evolens-tcg-card-scanner/id682726
 # short link below (Apple reports downloads per campaign). Empty: plain App Store links.
 APP_STORE_PT = ""
 # evolens' profiles. A name with no address is shown as plain text, never as a dead link.
-SOCIAL = {"Instagram": "", "TikTok": "", "YouTube": ""}
+SOCIAL = {"Instagram": "https://www.instagram.com/evolens.app/",
+          "TikTok": "https://www.tiktok.com/@evolens_app",
+          "YouTube": "https://www.youtube.com/channel/UC2H3x5tACIVctxPSTY6frrA"}
 # Short links for profiles: evolens.app/<source>/ opens the home page tagged utm_source=<source>, utm_medium=social,
 # utm_campaign=bio. Only these sources become App Store campaigns, so stray tags can't make new ones.
 CAMPAIGN_SOURCES = ("tiktok", "instagram", "youtube")
@@ -58,7 +60,7 @@ def nav(right):
 
 
 def footer():
-    social = "".join(f'<li><a href="{url}">{name}</a></li>' if url else f"<li>{name}</li>"
+    social = "".join(f'<li><a href="{url}" rel="me">{name}</a></li>' if url else f"<li>{name}</li>"
                      for name, url in SOCIAL.items())
     return f"""<footer class="foot">
   <hr class="foot__rule">
